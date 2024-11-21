@@ -15,13 +15,15 @@
         }
         .qr-code {
             margin-top: 20px;
+            width: 300px; /* Đặt kích thước cố định để đảm bảo mã QR hiển thị đúng */
+            height: 300px;
         }
     </style>
 </head>
 <body>
     <h1>Quét mã QR để thanh toán qua MoMo</h1>
     <p>Chỉ cần quét mã QR dưới đây để thực hiện thanh toán:</p>
-    <!-- Mã QR được tạo từ liên kết -->
+    <!-- Mã QR sẽ được hiển thị dưới đây -->
     <img 
         src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https%3A%2F%2Fme.momo.vn%2FHcThanh%3Famount%3D200000%26comment%3DThanh%2520toan%2520hoa%2520don" 
         alt="QR Code Thanh Toán MoMo" 

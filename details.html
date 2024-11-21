@@ -93,44 +93,24 @@ https://templatemo.com/tm-579-cyborg-gaming
               <div class="feature-banner header-text">
                 <div class="row">
                   <div class="col-lg-4">
-                    <!-- <img src="assets/images/feature-left.jpg" alt="" style="border-radius: 23px;"> -->
-                    <img src="https://img.vietqr.io/image/ACB-8357171-qr_only.jpg?amount=10000&addInfo=naptien%20HcThanh03" alt="QR Code chuyển khoản" />
-                    <!-- <h1>ACB</h1>
-                    <h2>8357171</h2> -->
+                      <!-- Hiển thị mã QR -->
+                      <div class="qr-container">
+                          <img id="qrImage" src="https://img.vietqr.io/image/ACB-8357171-qr_only.jpg?amount=10000&addInfo=naptien%20HcThanh03" alt="QR Code chuyển khoản" />
+                      </div>
                   </div>
                   <div class="col-lg-8">
-                    <div class="thumb">
-                      <h2>Nạp tiền tự động</h2>
-                      <label style="color: red;" for="">* Mã QR sẽ được tạo tự động khi bạn nhập số tiền</label>
-                      <h6>Số tiền nạp: </h6><input type="text" name="" id="">
-                      <label style="color: red;" for="">* 10.000đ</label>
-                      <h6>Nội dung chuyển khoản: </h6><input type="text" name="" id="" value="naptien HcThanh03" disabled>
-                      <!-- <img src="assets/images/feature-right.jpg" alt="" style="border-radius: 23px;">
-                      <a href="https://www.youtube.com/watch?v=r1b03uKWk_M" target="_blank"><i class="fa fa-play"></i></a> -->
-                      
-                    </div>
+                      <div class="thumb">
+                          <h2>Nạp tiền tự động</h2>
+                          <label style="color: red;" for="">* Mã QR sẽ được tạo tự động khi bạn nhập số tiền</label>
+                          <h6>Số tiền nạp: </h6>
+                          <!-- Input cho số tiền, khi thay đổi sẽ gọi hàm updateQRCode -->
+                          <input type="number" min="10000" step="1000" value="10000" id="amount" name="amount" placeholder="Nhập số tiền" oninput="updateQRCode()">
+                          <label style="color: red;" for="">* Tối thiểu là 10000đ</label>
+                          <h6>Nội dung chuyển khoản: </h6>
+                          <input type="text" name="" id="" value="naptien HcThanh03" disabled>
+                      </div>
                   </div>
-                </div>
-                <div style="margin-top: 10px;" class="row">
-                  <div class="col-lg-4">
-                    <!-- <img src="assets/images/feature-left.jpg" alt="" style="border-radius: 23px;"> -->
-                    <img src="https://img.vietqr.io/image/ACB-8357171-qr_only.jpg?amount=10000&addInfo=naptien%20HcThanh03" alt="QR Code chuyển khoản" />
-                    <!-- <h1>ACB</h1>
-                    <h2>8357171</h2> -->
-                  </div>
-                  <div class="col-lg-8">
-                    <div class="thumb">
-                      <h2>Nạp tiền tự động</h2>
-                      <label style="color: red;" for="">* Mã QR sẽ được tạo tự động khi bạn nhập số tiền</label>
-                      <h6>Số tiền nạp: </h6><input type="text" name="" id="">
-                      <label style="color: red;" for="">* 10.000đ</label>
-                      <h6>Nội dung chuyển khoản: </h6><input type="text" name="" id="" value="naptien HcThanh03" disabled>
-                      <!-- <img src="assets/images/feature-right.jpg" alt="" style="border-radius: 23px;">
-                      <a href="https://www.youtube.com/watch?v=r1b03uKWk_M" target="_blank"><i class="fa fa-play"></i></a> -->
-                      
-                    </div>
-                  </div>
-                </div>
+              </div>
               </div>
             </div>
           </div>
@@ -283,6 +263,21 @@ https://templatemo.com/tm-579-cyborg-gaming
 
   <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
+  <script>
+    // Hàm để cập nhật mã QR khi người dùng nhập số tiền
+    function updateQRCode() {
+        // Lấy giá trị số tiền từ input
+        var amount = document.getElementById("amount").value;
+        var content = "naptien%20HcThanh03"; // Nội dung chuyển khoản cố định
+        // Kiểm tra nếu người dùng nhập số tiền
+        if (amount) {
+            // Cập nhật URL mã QR
+            var qrUrl = "https://img.vietqr.io/image/ACB-8357171-qr_only.jpg?amount=" + amount + "&addInfo=" + content;
+            // Thay đổi thuộc tính src của hình ảnh mã QR
+            document.getElementById("qrImage").src = qrUrl;
+        }
+    }
+</script>
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
