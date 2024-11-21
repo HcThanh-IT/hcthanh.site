@@ -776,7 +776,8 @@ Banner Style
   /* background-image: url(../images/banner-bg.jpg); */
   background: url(../images/development.gif);
   background-position: center center;
-  background-size: cover;
+  /* background-size: cover; */
+  background-size: contain;
   min-height: 380px;
   border-radius: 23px;
   padding: 80px 60px;
@@ -1261,7 +1262,7 @@ Live Stream Style
   margin-top: 8px;
   font-size: 20px;
   font-weight: 700;
-  margin-left: 61px;
+  /* margin-left: 61px; */
 }
 
 .live-stream .main-button {
@@ -1693,6 +1694,10 @@ body {
   .most-popular .item .inner-item {
     margin-bottom: 20px;
   }
+  .live-stream .thumb .hover-effect {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 @media (max-width: 992px) {
@@ -1723,6 +1728,10 @@ body {
   .main-profile .main-info {
     margin: 45px 0px;
   }
+  .live-stream .thumb .hover-effect {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -1736,5 +1745,9 @@ body {
   }
   .gaming-library .item ul li {
     width: 16%;
+  }
+  .live-stream .thumb .hover-effect {
+    opacity: 1;
+    visibility: visible;
   }
 }

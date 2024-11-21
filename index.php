@@ -5,6 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Website cung cấp source code miễn phí và có phí.">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -185,21 +186,20 @@ https://templatemo.com/tm-579-cyborg-gaming
                     <div class="hover-effect">
                       <div class="content">
                         <div class="live">
-                          <a href="#">Live</a>
+                        <a href="#"><i class="fa fa-eye"></i> 1.2K</a>
                         </div>
                         <ul>
-                          <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
-                          <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
+                          <li><a href="#"><i class="fa fa-download""></i></i> 2.2M</a></li>
                         </ul>
                       </div>
                     </div>
                   </div>
                   <div class="down-content">
                     <div class="avatar">
-                      <img src="assets/images/avatar-01.jpg" alt="" style="max-width: 46px; border-radius: 50%; float: left;">
+                      <!-- <img src="assets/images/avatar-01.jpg" alt="" style="max-width: 46px; border-radius: 50%; float: left;"> -->
                     </div>
-                    <span><i class="fa fa-check"></i> Kengan Omeg</span>
-                    <h4>Just Talking With Fans</h4>
+                    <span><i class="fa fa-check"></i> HcThanh</span>
+                    <h4>Happy Birthday</h4>
                   </div> 
                 </div>
               </div>

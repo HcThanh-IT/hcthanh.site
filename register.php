@@ -10,7 +10,7 @@
 
     <title>HcThanh</title>
     <link rel="icon" href="assets/images/logoHT.png" type="image/png">
-    <link rel="stylesheet" href="assets/css/login.css">
+    <link rel="stylesheet" href="assets/css/register.css">
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -29,7 +29,7 @@
     <div class="login">
         <!-- Div 1: Form đăng ký -->
         <div class="login-box">
-            <h1>WELCOME</h1>
+            <h1>Đăng ký thành viên</h1>
             <form>
                 <div class="user-box">
                     <input type="text" name="username" required="">
@@ -39,12 +39,21 @@
                     <input type="password" name="password" required="">
                     <label>Mật khẩu</label>
                 </div>
+                <div class="user-box">
+                    <input type="email" name="email" required="">
+                    <label>Email</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" name="security-code" required="">
+                    <label>Mã bảo mật (Viết liền không dấu)</label>
+                </div>
+                <p class="p_security-code">* Dùng khi cấp lại mật khẩu</p>
                 <center>
-                    <a class="btn_a" href="#">Đăng nhập</a>
+                    <a class="btn_a" href="#">Đăng ký</a>
                 </center>
                 <p style="margin: 10px 0;">HOẶC</p>
                 <center>
-                    <a class="btn_a" href="./register.php">tạo tài khoản</a>
+                    <a class="btn_a" href="./login.php">Đã có tài khoản</a>
                 </center>
             </form>
         </div>

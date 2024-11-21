@@ -19,7 +19,7 @@ body {
 /* login bao gồm cả hai phần */
 .login {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   width: 90%;
   /* max-width: 1200px; */
   min-height: 80%;
