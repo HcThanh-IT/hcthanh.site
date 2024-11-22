@@ -7,25 +7,26 @@
 
   $account_users = new account_users($db);
   
-  echo "<pre style='color: white; background-color: black;'>";  // Thiết lập chữ màu trắng, nền đen
-  print_r($_POST);  // In ra tất cả dữ liệu trong $_POST
-  echo "</pre>";
+//   echo "<pre style='color: white; background-color: black;'>";  // Thiết lập chữ màu trắng, nền đen
+//   print_r($_POST);  // In ra tất cả dữ liệu trong $_POST
+//   echo "</pre>";
   
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_REQUEST['frm']) && $_REQUEST['frm'] == 'loginAccount') {
         $account_users->user_name = $_REQUEST['user_name'];
         $account_users->user_password = sha1($_REQUEST['user_password']);
         $stmt = $account_users->read_login();
-        
-        // if ($stmt->rowCount() > 0) {
-        //     $row = $stmt->fetch();  // Lấy dữ liệu dòng đầu tiên
-        //     session_start();  // Khởi tạo session
-        //     $_SESSION['user_ID'] = $row['user_ID'];  // Lưu user_ID vào session
-        //     $stmt_user_ID = $account_users->read_ID();  // Đọc ID người dùng từ cơ sở dữ liệu
-        //     header("location: index.php");  // Điều hướng đến trang chủ
-        // } else {
-        //     echo "Lỗi đăng nhập. Kiểm tra lại tên người dùng hoặc mật khẩu.";
-        // }
+        if ($stmt->rowCount() > 0) {
+            $row = $stmt->fetch();  // Lấy dữ liệu dòng đầu tiên
+            session_start();  // Khởi tạo session
+            $_SESSION['user_ID'] = $row['user_ID'];  // Lưu user_ID vào session
+            $stmt_user_ID = $account_users->read_ID();  // Đọc ID người dùng từ cơ sở dữ liệu
+            header("location: index.php");  // Điều hướng đến trang chủ
+        } else {
+             // Nếu đăng nhập không thành công, truyền thông báo qua URL
+             header("location: login.php?error=1");  // Điều hướng lại trang login với tham số lỗi
+             exit();
+        }
     }
 }
     
@@ -55,9 +56,24 @@
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest"></script>
 </head>
 <body>
     <?php include './includes/header.php'?>
+    <?php
+if (isset($_GET['error']) && $_GET['error'] == 1) {
+    echo "
+        <script type='text/javascript'>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi đăng nhập!',
+                text: 'Kiểm tra lại tên người dùng hoặc mật khẩu!',
+                confirmButtonText: 'Đóng'
+            });
+        </script>
+    ";
+}
+?>
     <div class="login">
         <!-- Div 1: Form đăng ký -->
         <div class="login-box">
@@ -1218,5 +1234,7 @@
   <script src="assets/js/tabs.js"></script>
   <script src="assets/js/popup.js"></script>
   <script src="assets/js/custom.js"></script>
+
+
 </body>
 </html>

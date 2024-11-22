@@ -21,7 +21,7 @@
 
     <title>HcThanh</title>
     <link rel="icon" href="assets/images/logoHT.png" type="image/png">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
