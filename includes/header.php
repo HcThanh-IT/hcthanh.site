@@ -16,7 +16,7 @@
                         <li><a href="./details.php">Nạp tiền</a></li>
                         <li><a href="./streams.html">Streams</a></li>
                         <li><a href="./login.php">Đăng nhập</a></li>
-                        <li><a href="./profile.html">Profile <img src="./assets/images/profile-header.jpg" alt=""></a></li>
+                        <li><a href="./profile.html">Profile <img src="./assets/images/avt_user.svg" alt=""></a></li>
                         
                     </ul>   
                     <a class='menu-trigger'>

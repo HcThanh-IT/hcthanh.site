@@ -1,3 +1,29 @@
+<?php 
+  include ".\ADMIN\includes\connect_database.php";
+  include ".\ADMIN\includes\account_user.php";
+
+  $database = new database;
+  $db = $database->connect();
+
+  $account_users = new account_users($db);
+
+    if($_SERVER['REQUEST_METHOD']=='POST'){
+        if (isset($_REQUEST['frm']) && $_REQUEST['frm']=='createAccount') {
+        $user->user_fullname = $_REQUEST['user_fullname'];
+        $user->user_email = $_REQUEST['user_email'];
+        $user->user_password = sha1($_REQUEST['user_password']);
+        $user->user_phone = $_REQUEST['user_phone'];
+        $user->user_image = $_REQUEST['user_image'];
+        $user->user_infor = $_REQUEST['user_infor'];
+
+        if ($user->add()) {
+            header("location: login.php");
+            $status = "Create account successfully!";
+        }
+   
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,7 +75,9 @@
                 </div>
                 <p class="p_security-code">* Dùng khi cấp lại mật khẩu</p>
                 <center>
-                    <a class="btn_a" href="#">Đăng ký</a>
+                    <input type="hidden" name="frm" value="createAccount">
+                    <button type="submit"><a class="btn_a" href="#">Đăng ký</a></button>
+                    
                 </center>
                 <p style="margin: 10px 0;">HOẶC</p>
                 <center>

@@ -1,3 +1,13 @@
+<?php 
+  include ".\ADMIN\includes\connect_database.php";
+  include ".\ADMIN\includes\products.php";
+
+  $database = new database;
+  $db = $database->connect();
+
+  $products = new products($db);
+  $stmt_products = $products->read_all();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
