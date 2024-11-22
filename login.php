@@ -1,12 +1,34 @@
 <?php 
   include ".\ADMIN\includes\connect_database.php";
-  include ".\ADMIN\includes\products.php";
+  include ".\ADMIN\includes\account_user.php";
 
-  $database = new database;
+  $database = new database();
   $db = $database->connect();
 
-  $products = new products($db);
-  $stmt_products = $products->read_all();
+  $account_users = new account_users($db);
+  
+  echo "<pre style='color: white; background-color: black;'>";  // Thiết lập chữ màu trắng, nền đen
+  print_r($_POST);  // In ra tất cả dữ liệu trong $_POST
+  echo "</pre>";
+  
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_REQUEST['frm']) && $_REQUEST['frm'] == 'loginAccount') {
+        $account_users->user_name = $_REQUEST['user_name'];
+        $account_users->user_password = sha1($_REQUEST['user_password']);
+        $stmt = $account_users->read_login();
+        
+        // if ($stmt->rowCount() > 0) {
+        //     $row = $stmt->fetch();  // Lấy dữ liệu dòng đầu tiên
+        //     session_start();  // Khởi tạo session
+        //     $_SESSION['user_ID'] = $row['user_ID'];  // Lưu user_ID vào session
+        //     $stmt_user_ID = $account_users->read_ID();  // Đọc ID người dùng từ cơ sở dữ liệu
+        //     header("location: index.php");  // Điều hướng đến trang chủ
+        // } else {
+        //     echo "Lỗi đăng nhập. Kiểm tra lại tên người dùng hoặc mật khẩu.";
+        // }
+    }
+}
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,17 +62,19 @@
         <!-- Div 1: Form đăng ký -->
         <div class="login-box">
             <h1>WELCOME</h1>
-            <form>
+            <?php echo $_SERVER['REQUEST_METHOD']; ?>
+            <form name="frm" method="POST">
                 <div class="user-box">
-                    <input type="text" name="username" required="">
+                    <input type="text" name="user_name" required="">
                     <label>Tên tài khoản</label>
                 </div>
                 <div class="user-box">
-                    <input type="password" name="password" required="">
+                    <input type="password" name="user_password" required="">
                     <label>Mật khẩu</label>
                 </div>
                 <center>
-                    <a class="btn_a" href="#">Đăng nhập</a>
+                    <input type="hidden" name="frm" value="loginAccount">
+                    <button class="btn_a" type="submit">Đăng nhập</button>
                 </center>
                 <p style="margin: 10px 0;">HOẶC</p>
                 <center>

@@ -2,23 +2,20 @@
   include ".\ADMIN\includes\connect_database.php";
   include ".\ADMIN\includes\account_user.php";
 
-  $database = new database;
+  $database = new database();
   $db = $database->connect();
 
   $account_users = new account_users($db);
 
     if($_SERVER['REQUEST_METHOD']=='POST'){
         if (isset($_REQUEST['frm']) && $_REQUEST['frm']=='createAccount') {
-        $user->user_fullname = $_REQUEST['user_fullname'];
-        $user->user_email = $_REQUEST['user_email'];
-        $user->user_password = sha1($_REQUEST['user_password']);
-        $user->user_phone = $_REQUEST['user_phone'];
-        $user->user_image = $_REQUEST['user_image'];
-        $user->user_infor = $_REQUEST['user_infor'];
+        $account_users->user_name = $_REQUEST['user_name'];
+        $account_users->user_password = sha1($_REQUEST['user_password']);
+        $account_users->user_email = $_REQUEST['user_email'];
+        $account_users->user_security_code = $_REQUEST['user_security_code'];
 
-        if ($user->add()) {
+        if ($account_users->create_account_user()) {
             header("location: login.php");
-            $status = "Create account successfully!";
         }
    
     }
@@ -56,28 +53,27 @@
         <!-- Div 1: Form đăng ký -->
         <div class="login-box">
             <h1>Đăng ký thành viên</h1>
-            <form>
+            <form name="frm" method="POST">
                 <div class="user-box">
-                    <input type="text" name="username" required="">
+                    <input type="text" name="user_name" required="">
                     <label>Tên tài khoản</label>
                 </div>
                 <div class="user-box">
-                    <input type="password" name="password" required="">
+                    <input type="password" name="user_password" required="">
                     <label>Mật khẩu</label>
                 </div>
                 <div class="user-box">
-                    <input type="email" name="email" required="">
+                    <input type="email" name="user_email" required="">
                     <label>Email</label>
                 </div>
                 <div class="user-box">
-                    <input type="text" name="security-code" required="">
+                    <input type="text" name="user_security-code" required="">
                     <label>Mã bảo mật (Viết liền không dấu)</label>
                 </div>
                 <p class="p_security-code">* Dùng khi cấp lại mật khẩu</p>
                 <center>
                     <input type="hidden" name="frm" value="createAccount">
-                    <button type="submit"><a class="btn_a" href="#">Đăng ký</a></button>
-                    
+                    <button class="btn_a" type="submit">Đăng ký</button>
                 </center>
                 <p style="margin: 10px 0;">HOẶC</p>
                 <center>
