@@ -11,8 +11,10 @@
   $stmt_products = $products->read_all();
   
   $account_users = new account_users($db);
+  if (isset($_SESSION['user_ID'])) {
   $stmt_user_ID = $account_users->read_ID($_SESSION['user_ID']);
   $rows_user_ID = $stmt_user_ID->fetch(PDO::FETCH_ASSOC);
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">

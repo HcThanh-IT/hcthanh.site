@@ -20,7 +20,6 @@
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch();  // Lấy dữ liệu dòng đầu tiên
             $_SESSION['user_ID'] = $row['user_ID'];  // Lưu user_ID vào session
-            $stmt_user_ID = $account_users->read_ID();  // Đọc ID người dùng từ cơ sở dữ liệu
             header("location: index.php?success=1");  // Điều hướng đến trang chủ
         } else {
              // Nếu đăng nhập không thành công, truyền thông báo qua URL
