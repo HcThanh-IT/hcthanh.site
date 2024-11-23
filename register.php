@@ -46,6 +46,8 @@
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest"></script>
+
 </head>
 <body>
     <?php include './includes/header.php'?>

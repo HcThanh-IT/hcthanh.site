@@ -13,11 +13,20 @@
                     <ul class="nav">
                         <li><a href="./index.php" class="active">Trang chủ</a></li>
                         <li><a href="./browse.html">Browse</a></li>
-                        <li><a href="./details.php">Nạp tiền</a></li>
+                        <li><a href="./deposit_money.php">Nạp tiền</a></li>
                         <li><a href="./streams.html">Streams</a></li>
-                        <li><a href="./login.php">Đăng nhập</a></li>
-                        <li><a href="./profile.html">Profile <img src="./assets/images/avt_user.svg" alt=""></a></li>
-                        
+                        <li><a href="./streams.html">Giỏ hàng</a></li>
+                        <?php 
+                        if (isset($_SESSION['user_ID'])) {
+                            // Nếu người dùng đã đăng nhập
+                            echo '<li><a href="./profile_user.php">' . $rows_user_ID['user_name'].' - '.$rows_user_ID['user_balance'] . 'đ<img src="./assets/images/avt_user.svg" alt=""></a></li>';
+                        } else {
+                            // Nếu người dùng chưa đăng nhập
+                            echo '<li><a href="./login.php">Đăng nhập</a></li>';
+                        }
+?>
+
+
                     </ul>   
                     <a class='menu-trigger'>
                         <span>Menu</span>
@@ -28,3 +37,33 @@
         </div>
     </div>
   </header>
+  <?php 
+
+
+
+  if (isset($_GET['error']) && $_GET['error'] == 1) {
+    echo "
+        <script type='text/javascript'>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi đăng nhập!',
+                text: 'Kiểm tra lại tên người dùng hoặc mật khẩu!',
+                confirmButtonText: 'Đóng'
+            });
+        </script>
+    ";
+}
+if (isset($_GET['success']) && $_GET['success'] == 1) {
+    echo "
+        <script type='text/javascript'>
+            Swal.fire({
+                icon: 'success',
+                title: 'Đăng nhập thành công!',
+                text: 'Chào mừng bạn đến với hệ thống!',
+                confirmButtonText: 'Đóng'
+            });
+        </script>
+
+    ";
+}
+?>

@@ -49,13 +49,21 @@ class account_users{
 			return false;
 		}
 	}
-	public function read_ID() {
-		$sql = "SELECT * FROM $this->table WHERE user_id = :get_id";
+	public function read_ID($user_ID) {
+		// Trước khi gán tham số, in ra giá trị
+		$sql = "SELECT * FROM $this->table WHERE user_ID = :get_id";
+	
+		// Chuẩn bị câu lệnh SQL và bind tham số
 		$stmt = $this->conn->prepare($sql);
-		$stmt->bindParam(":get_id", $this->user_ID);  // Liên kết tham số với ID người dùng trong session
+		$stmt->bindParam(":get_id", $user_ID);  // Sử dụng tham số truyền vào phương thức
+	
+		// Thực thi câu lệnh
 		$stmt->execute();
+		
 		return $stmt;  // Trả về đối tượng truy vấn
 	}
+	
+
 	
 	public function read_login() {
 		$sql = "SELECT * FROM $this->table WHERE `user_name` = :get_user_name AND `user_password` = :get_user_password";

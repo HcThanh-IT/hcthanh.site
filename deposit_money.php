@@ -1,3 +1,16 @@
+<?php 
+  session_start();
+  include ".\ADMIN\includes\connect_database.php";
+  include ".\ADMIN\includes\account_user.php";
+
+  $database = new database();
+  $db = $database->connect();
+
+  $account_users = new account_users($db);
+  $stmt_user_ID = $account_users->read_ID($_SESSION['user_ID']);
+  $rows_user_ID = $stmt_user_ID->fetch(PDO::FETCH_ASSOC); 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,6 +59,7 @@ https://templatemo.com/tm-579-cyborg-gaming
 
   <!-- ***** Header Area Start ***** -->
   <?php include './includes/header.php'?>
+  
   <!-- ***** Header Area End ***** -->
 
   <div class="container">
@@ -61,7 +75,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                   <div class="col-lg-4">
                       <!-- Hiển thị mã QR -->
                       <div class="qr-container">
-                          <img id="qrImage" src="https://img.vietqr.io/image/ACB-8357171-qr_only.jpg?amount=10000&addInfo=naptien%20HcThanh03" alt="QR Code chuyển khoản" />
+                          <img id="qrImage" src="https://img.vietqr.io/image/ACB-8357171-qr_only.jpg?amount=10000&addInfo=naptien%20<?php echo ($rows_user_ID['user_name']); ?>" alt="QR Code chuyển khoản" />
                       </div>
                   </div>
                   <div class="col-lg-8">
@@ -73,7 +87,8 @@ https://templatemo.com/tm-579-cyborg-gaming
                           <input type="number" min="10000" step="1000" value="10000" id="amount" name="amount" placeholder="Nhập số tiền" oninput="updateQRCode()">
                           <label style="color: red;" for="">* Tối thiểu là 10000đ</label>
                           <h6>Nội dung chuyển khoản: </h6>
-                          <input type="text" name="" id="" value="naptien HcThanh03" disabled>
+                          <input type="text" name="user_name" id="user_name" value="naptien <?php echo ($rows_user_ID['user_name']); ?>" disabled>
+                          <!--  -->
                       </div>
                   </div>
               </div>

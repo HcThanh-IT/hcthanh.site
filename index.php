@@ -1,12 +1,18 @@
 <?php 
+  session_start();
   include ".\ADMIN\includes\connect_database.php";
   include ".\ADMIN\includes\products.php";
-
+  include ".\ADMIN\includes\account_user.php";
+  
   $database = new database;
   $db = $database->connect();
 
   $products = new products($db);
   $stmt_products = $products->read_all();
+  
+  $account_users = new account_users($db);
+  $stmt_user_ID = $account_users->read_ID($_SESSION['user_ID']);
+  $rows_user_ID = $stmt_user_ID->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,13 +38,8 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-<!--
 
-TemplateMo 579 Cyborg Gaming
-
-https://templatemo.com/tm-579-cyborg-gaming
-
--->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest"></script>
   </head>
 
 <body>

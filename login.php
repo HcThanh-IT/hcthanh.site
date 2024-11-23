@@ -1,4 +1,5 @@
 <?php 
+    session_start();
   include ".\ADMIN\includes\connect_database.php";
   include ".\ADMIN\includes\account_user.php";
 
@@ -7,9 +8,9 @@
 
   $account_users = new account_users($db);
   
-//   echo "<pre style='color: white; background-color: black;'>";  // Thiết lập chữ màu trắng, nền đen
-//   print_r($_POST);  // In ra tất cả dữ liệu trong $_POST
-//   echo "</pre>";
+  echo "<pre style='color: white; background-color: black;'>";  // Thiết lập chữ màu trắng, nền đen
+  print_r($_POST);  // In ra tất cả dữ liệu trong $_POST
+  echo "</pre>";
   
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_REQUEST['frm']) && $_REQUEST['frm'] == 'loginAccount') {
@@ -18,10 +19,9 @@
         $stmt = $account_users->read_login();
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch();  // Lấy dữ liệu dòng đầu tiên
-            session_start();  // Khởi tạo session
             $_SESSION['user_ID'] = $row['user_ID'];  // Lưu user_ID vào session
             $stmt_user_ID = $account_users->read_ID();  // Đọc ID người dùng từ cơ sở dữ liệu
-            header("location: index.php");  // Điều hướng đến trang chủ
+            header("location: index.php?success=1");  // Điều hướng đến trang chủ
         } else {
              // Nếu đăng nhập không thành công, truyền thông báo qua URL
              header("location: login.php?error=1");  // Điều hướng lại trang login với tham số lỗi
@@ -60,20 +60,6 @@
 </head>
 <body>
     <?php include './includes/header.php'?>
-    <?php
-if (isset($_GET['error']) && $_GET['error'] == 1) {
-    echo "
-        <script type='text/javascript'>
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi đăng nhập!',
-                text: 'Kiểm tra lại tên người dùng hoặc mật khẩu!',
-                confirmButtonText: 'Đóng'
-            });
-        </script>
-    ";
-}
-?>
     <div class="login">
         <!-- Div 1: Form đăng ký -->
         <div class="login-box">
