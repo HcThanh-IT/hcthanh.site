@@ -1,3 +1,13 @@
+<?php
+    include "includes\connect_database.php";
+    include "includes\products.php";
+
+    $database = new database;
+    $db = $database->connect();
+
+    $product = new products($db);
+    $stmt_product = $product->read_all();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,33 +90,48 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Danh sách sản phẩm</h4>
+                                <button type="button" class="btn mb-1 btn-rounded btn-success"><a href="./AD_add_product.php">Thêm sản phẩm</a></button>
                                 <div class="table-responsive"> 
                                     <table class="table table-bordered table-striped verticle-middle">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Task</th>
-                                                <th scope="col">Progress</th>
-                                                <th scope="col">Deadline</th>
-                                                <th scope="col">Label</th>
+                                                <th scope="col">Tên sản phẩm</th>
+                                                <th scope="col">Hình ảnh</th>
+                                                <th scope="col">Giá</th>
+                                                <th scope="col">Link</th>
+                                                <th scope="col">Mã kích hoạt</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php 
+                                                while ($row_product = $stmt_product->fetch()) {
+                                            ?>
                                             <tr>
-                                                <td>Air Conditioner</td>
-                                                <td>
-                                                    <div class="progress" style="height: 10px">
-                                                        <div class="progress-bar gradient-1" style="width: 70%;" role="progressbar"><span class="sr-only">70% Complete</span>
-                                                        </div>
-                                                    </div> 
+                                                <td style="width:50px"> <?php echo $row_product['product_name'] ?></td>
+                                                <td style="width:20%">
+                                                   <img style="width:70%; height:7vw; object-fit: cover;" 
+                                                   src="./uploads/image/<?php echo $row_product['product_image'] ?>" alt="">
                                                 </td>
-                                                <td>Apr 20,2018</td>
-                                                <td><span class="label gradient-1 btn-rounded">70%</span>
+                                                <td style="width:15%"><span class="label gradient-1 btn-rounded"><?php echo $row_product['product_price'] ?> đ</span></td>
+                                                <td style="width:40%"><?php echo $row_product['product_link'] ?></span>
                                                 </td>
-                                                <td><span><a href="#" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-muted m-r-5"></i> </a><a href="#" data-toggle="tooltip" data-placement="top" title="Close"><i class="fa fa-trash color-danger"></i></a></span>
+                                                <td style="width:10%"><span class="label gradient-1 btn-rounded"><?php echo $row_product['product_code'] ?></span>
+                                                </td>
+                                                <td style="width:5%">
+                                                    <span>
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                            <i class="fa fa-pencil color-muted m-r-5"></i> 
+                                                        </a>
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                            <i class="fa fa-trash color-danger"></i>
+                                                        </a>
+                                                    </span>
                                                 </td>
                                             </tr>
-                                           
+                                           <?php
+                                            }
+                                           ?>
                                         </tbody>
                                     </table>
                                 </div>

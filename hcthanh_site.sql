@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2024 at 05:41 PM
+-- Generation Time: Nov 24, 2024 at 10:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,7 +34,9 @@ CREATE TABLE `account_admin` (
   `AD_email` varchar(50) NOT NULL,
   `AD_image` varchar(50) NOT NULL,
   `AD_link_phone_number` varchar(25) NOT NULL,
-  `AD_link_tiktok` varchar(25) NOT NULL
+  `AD_link_tiktok` varchar(25) NOT NULL,
+  `bank_account_name` varchar(10) NOT NULL,
+  `bank_account_number` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -86,6 +88,14 @@ CREATE TABLE `cart_temp` (
   `user_ID` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `cart_temp`
+--
+
+INSERT INTO `cart_temp` (`cart_temp_ID`, `product_ID`, `user_ID`) VALUES
+(1, 2, 1),
+(2, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -95,7 +105,7 @@ CREATE TABLE `cart_temp` (
 CREATE TABLE `product` (
   `product_ID` int(10) NOT NULL,
   `product_name` varchar(100) NOT NULL,
-  `product_image` varchar(25) NOT NULL,
+  `product_image` varchar(100) NOT NULL,
   `product_price` int(10) NOT NULL,
   `product_view` int(10) NOT NULL,
   `product_download` int(10) NOT NULL,
@@ -103,6 +113,14 @@ CREATE TABLE `product` (
   `product_link` text NOT NULL,
   `product_code` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`product_ID`, `product_name`, `product_image`, `product_price`, `product_view`, `product_download`, `product_content`, `product_link`, `product_code`) VALUES
+(1, 'Happy Birthday', '', 0, 0, 0, 'Source code chúc mừng sinh nhật', '', 'C916M8'),
+(2, 'Happy Birthday', 'img1.jpg', 10000, 0, 0, 'Source code chúc mừng sinh nhật', 'https://soundcloud.com/search?q=gi%C3%A3%20t%E1%BB%AB%20remix&query_urn=soundcloud%3Asearch-autocomplete%3A5f2db7fc686245bc98daaf48ad5c9274', 'EGWBDA');
 
 -- --------------------------------------------------------
 
@@ -201,13 +219,13 @@ ALTER TABLE `bank_account`
 -- AUTO_INCREMENT for table `cart_temp`
 --
 ALTER TABLE `cart_temp`
-  MODIFY `cart_temp_ID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `cart_temp_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_ID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `purchase_history`

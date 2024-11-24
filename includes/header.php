@@ -15,7 +15,7 @@
                         <li><a href="./browse.html">Browse</a></li>
                         <li><a href="./deposit_money.php">Nạp tiền</a></li>
                         <li><a href="./streams.html">Streams</a></li>
-                        <li><a href="./streams.html">Giỏ hàng</a></li>
+                        <li><a href="./cart.php">Giỏ hàng</a></li>
                         <?php 
                         if (isset($_SESSION['user_ID'])) {
                             // Nếu người dùng đã đăng nhập
