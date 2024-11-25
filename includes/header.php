@@ -19,13 +19,13 @@
                         <?php 
                         if (isset($_SESSION['user_ID'])) {
                             // Nếu người dùng đã đăng nhập
-                            echo '<li><a href="./profile_user.php">' . $rows_user_ID['user_name'].' - '.$rows_user_ID['user_balance'] . 'đ<img src="./assets/images/avt_user.svg" alt=""></a></li>';
+                            echo '<li><a href="./profile_user.php">' . $rows_user_ID['user_name'] . ' - ' . number_format($rows_user_ID['user_balance'], 0, ',', '.') . 'đ<img src="./assets/images/avt_user.svg" alt=""></a></li>';
+
                         } else {
                             // Nếu người dùng chưa đăng nhập
                             echo '<li><a href="./login.php">Đăng nhập</a></li>';
                         }
 ?>
-
 
                     </ul>   
                     <a class='menu-trigger'>

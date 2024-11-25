@@ -14,7 +14,8 @@
   $account_users = new account_users($db);
 
   $cart = new cart($db);
-
+  
+  echo $product_code;
   if (isset($_SESSION['user_ID'])) {
     // Lấy thông tin người dùng từ session
     $stmt_user_ID = $account_users->read_ID($_SESSION['user_ID']);
@@ -26,10 +27,10 @@ if (isset($_GET['add_cart'])) {
     if (isset($_SESSION['user_ID'])) {
         // Kiểm tra và xác nhận giá trị 'add_cart' (ví dụ: đảm bảo là số nguyên và hợp lệ)
         $product_ID = intval($_GET['add_cart']);
-        
         if ($product_ID > 0) {
             // Thêm sản phẩm vào giỏ hàng
-            if ($cart->add_cart($product_ID, $_SESSION['user_ID'])) {
+            $product_code = strtoupper(bin2hex(random_bytes(4)));
+            if ($cart->add_cart($product_ID, $_SESSION['user_ID'], $product_code)) {
                 // Chuyển hướng sau khi thêm thành công
                 header("location: cart.php");
                 exit(); // Dừng script sau khi chuyển hướng

@@ -77,6 +77,9 @@
           <!-- ***** Gaming Library Start ***** -->
           <div class="gaming-library">
             <form action="">
+              <?php 
+                if (isset($_SESSION['user_ID'])) {
+                  ?>
             <div class="col-lg-12">
     <div class="heading-section">
         <h4><em>Giỏ hàng</em></h4>
@@ -126,7 +129,7 @@
 
               <div class="col-lg-12">
                 <div class="main-button">
-                  <a href="profile.html">Thanh toán</a>
+                  <a href="">Thanh toán</a>
                 </div>
               </div>
             </form>
@@ -136,7 +139,14 @@
       </div>
     </div>
   </div>
-  
+  <?php } else{
+  ?>
+  <div class="col-lg-12">
+    <div class="heading-section">
+        <h4>Vui lòng <em><a href="./login.php">đăng nhập</a></em> để xem giỏ hàng</h4>
+    </div>
+  </div>
+  <?php }?>
   <?php include './includes/footer.php'?>
 
 

@@ -19,20 +19,38 @@ class cart{
 		$stmt->execute();
 		return $stmt; 
 	}
-	public function add_cart($temp_product_ID, $temp_user_ID){
-		$sql = "INSERT INTO $this->table (product_ID, user_ID) VALUES (:product_ID, :user_ID)";
+	public function add_cart($temp_product_ID, $temp_user_ID, $temp_product_code){
+		$sql = "INSERT INTO $this->table (product_ID, user_ID, product_code	) VALUES (:product_ID, :user_ID,:product_code)";
 		$stmt = $this->conn->prepare($sql);
 	
 		// Bind giá trị vào câu lệnh SQL
 		$stmt->bindParam(':product_ID', $temp_product_ID, PDO::PARAM_INT);
 		$stmt->bindParam(':user_ID', $temp_user_ID, PDO::PARAM_INT);
-	
+		$stmt->bindParam(':product_code', $temp_product_code);
 		try {
 			if ($stmt->execute()) {
 				return true;
 			}
 		} catch (PDOException $e) {
 			echo "Error insert record: <br>" . $e->getMessage();
+			return false;
+		}
+	}
+	public function delete_cart_item($cart_item_ID) {
+		$sql = "DELETE FROM $this->table WHERE cart_temp_ID = :cart_item_ID";
+		
+		$stmt = $this->conn->prepare($sql);
+		
+		$stmt->bindParam(':cart_item_ID', $cart_item_ID, PDO::PARAM_INT);
+		
+		try {
+			if ($stmt->execute()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (PDOException $e) {
+			echo "Error deleting record: " . $e->getMessage();
 			return false;
 		}
 	}
