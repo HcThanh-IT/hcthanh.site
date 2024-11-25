@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2024 at 10:10 AM
+-- Generation Time: Nov 25, 2024 at 02:47 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -60,7 +60,7 @@ CREATE TABLE `account_users` (
 --
 
 INSERT INTO `account_users` (`user_ID`, `user_name`, `user_password`, `user_email`, `user_security_code`, `user_balance`, `user_date_created`) VALUES
-(1, 'HcThanh', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Thanh@gmail.com', '123456', 0, '2024-11-22 22:54:42');
+(1, 'HcThanh', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Thanh@gmail.com', '123456', 20000, '2024-11-25 17:28:05');
 
 -- --------------------------------------------------------
 
@@ -85,16 +85,19 @@ CREATE TABLE `bank_account` (
 CREATE TABLE `cart_temp` (
   `cart_temp_ID` int(10) NOT NULL,
   `product_ID` int(10) NOT NULL,
-  `user_ID` int(10) NOT NULL
+  `user_ID` int(10) NOT NULL,
+  `product_code` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `cart_temp`
 --
 
-INSERT INTO `cart_temp` (`cart_temp_ID`, `product_ID`, `user_ID`) VALUES
-(1, 2, 1),
-(2, 1, 1);
+INSERT INTO `cart_temp` (`cart_temp_ID`, `product_ID`, `user_ID`, `product_code`) VALUES
+(5, 1, 1, ''),
+(8, 2, 1, '0'),
+(9, 2, 1, '13'),
+(10, 2, 1, '16625CC5');
 
 -- --------------------------------------------------------
 
@@ -132,7 +135,8 @@ CREATE TABLE `purchase_history` (
   `purchase_history_ID` int(10) NOT NULL,
   `product_ID` int(10) NOT NULL,
   `user_ID` int(10) NOT NULL,
-  `purchase_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `purchase_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `product_code` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -219,7 +223,7 @@ ALTER TABLE `bank_account`
 -- AUTO_INCREMENT for table `cart_temp`
 --
 ALTER TABLE `cart_temp`
-  MODIFY `cart_temp_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cart_temp_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `product`
