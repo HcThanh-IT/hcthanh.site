@@ -2,6 +2,8 @@
   session_start();
   include ".\ADMIN\includes\connect_database.php";
   include ".\ADMIN\includes\account_user.php";
+  include ".\ADMIN\includes\purchase_history.php";
+  include ".\ADMIN\includes\products.php";
 
   $database = new database();
   $db = $database->connect();
@@ -9,6 +11,12 @@
   $account_users = new account_users($db);
   $stmt_user_ID = $account_users->read_ID($_SESSION['user_ID']);
   $rows_user_ID = $stmt_user_ID->fetch(PDO::FETCH_ASSOC); 
+
+  $products = new products($db);
+  $stmt_products = $products->read_all();
+
+  $purchase_history = new purchase_history($db);
+  $purchase_history_user_ID = $purchase_history->user_ID($_SESSION['user_ID']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,15 +114,57 @@ https://templatemo.com/tm-579-cyborg-gaming
               </div>
               <div class="item">
                 <ul>
-                  <li><img src="assets/images/game-01.jpg" alt="" class="templatemo-item"></li>
-                  <li><h4>Dota 2</h4><span>Sandbox</span></li>
-                  <li><h4>Date Added</h4><span>24/08/2036</span></li>
-                  <li><h4>Hours Played</h4><span>634 H 22 Mins</span></li>
-                  <li><h4>Currently</h4><span>Downloaded</span></li>
-                  <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
+                  <li><h4>STT</h4></li>
+                  <li><h4>Hình ảnh</h4></li>
+                  <li><h4>Tên sản phẩm</h4></li>
+                  <li><h4>Mã kích hoạt</h4></li>
+                  <li><h4>Thao tác</h4></li>
                 </ul>
               </div>
-              <div class="item">
+              <?php
+
+                // Lấy tất cả sản phẩm trước để không phải gọi fetch() trong vòng lặp lồng nhau
+                $products = [];
+                while ($row_products = $stmt_products->fetch()) {
+                    $products[$row_products['product_ID']] = $row_products; // Lưu trữ các sản phẩm trong mảng theo ID sản phẩm
+                }
+                $num = 1;
+                // Lặp qua giỏ hàng và tính tổng giá
+                while ($rows_purchase_history_user_ID = $purchase_history_user_ID->fetch()) {
+                  // Số thứ tự sản phẩm
+                  $product_ID = $rows_purchase_history_user_ID['product_ID'];
+
+                // Kiểm tra xem sản phẩm có tồn tại trong mảng $products không
+                if (isset($products[$product_ID])) {
+                    $product = $products[$product_ID];
+
+                    ?>
+                    <div class="item">
+                        <ul>
+                            <li><h4><?php echo $num; ?></h4></li>
+                            <li><img src="./ADMIN/uploads/image/<?php echo $product['product_image']; ?>" alt=""></li>
+                            <li><h4><?php echo $product['product_name']; ?></h4></li>
+                            <li><h4><?php echo $rows_purchase_history_user_ID['product_code']; ?></h4></li>
+
+                            <?php 
+                            // So sánh điều kiện thay vì gán
+                            if ($rows_purchase_history_user_ID['active'] == '1') { ?>
+                                <li><div class="main-border-button"><a href="<?php echo $product['product_link']; ?>">Chi tiết</a></div></li>
+                            <?php } 
+                            // So sánh điều kiện thay vì gán
+                            if ($rows_purchase_history_user_ID['active'] == '0') { ?>
+                                <li><div class="main-button"><a href="#">Kích hoạt</a></div></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                    <?php
+                }
+                $num++; // Tăng số thứ tự lên 1
+                }
+                ?>
+
+
+              <!-- <div class="item">
                 <ul>
                   <li><img src="assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
                   <li><h4>Fortnite</h4><span>Sandbox</span></li>
@@ -133,7 +183,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                   <li><h4>Currently</h4><span>Downloaded</span></li>
                   <li><div class="main-button"><a href="#">Kích hoạt</a></div></li>
                 </ul>
-              </div>
+              </div> -->
             </div>
           </div>
           <!-- ***** Gaming Library End ***** -->

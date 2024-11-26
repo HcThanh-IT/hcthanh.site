@@ -4,7 +4,8 @@
   include ".\ADMIN\includes\products.php";
   include ".\ADMIN\includes\account_user.php";
   include ".\ADMIN\includes\cart.php";
-  
+  include ".\ADMIN\includes\purchase_history.php";
+
   $database = new database;
   $db = $database->connect(); // Kết nối với database
 
@@ -14,6 +15,8 @@
   $account_users = new account_users($db);
 
   $cart = new cart($db);
+
+  $purchase_history = new purchase_history($db);
 
   if (isset($_SESSION['user_ID'])) {
     $stmt_user_ID = $account_users->read_ID($_SESSION['user_ID']);
@@ -165,61 +168,58 @@
                     $stmt_balance->execute(['user_ID' => $user_ID]);
                     $user_balance = $stmt_balance->fetchColumn();
 
-                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && $user_balance >= $total_price) {
-                        // Bắt đầu giao dịch thanh toán
-                        try {
-                            // Bắt đầu giao dịch
-                            $db->beginTransaction();
-
-                            // Lặp qua giỏ hàng của người dùng và insert vào bảng purchase_history
-                            while ($rows_cart_ID = $stmt_cart_ID->fetch()) {
-                                $product_ID = $rows_cart_ID['product_ID'];
-
-                                if (isset($products[$product_ID])) {
-                                    $product = $products[$product_ID];
-
-
-                                    // Câu lệnh chèn vào bảng purchase_history
-                                    $stmt_insert = $db->prepare("INSERT INTO `purchase_history` (`product_ID`, `user_ID`, `purchase_date`, `product_code`) 
-                                                                VALUES (:product_ID, :user_ID, NOW(), :product_code)");
-
-                                    // Thực thi câu lệnh với các tham số
-                                    $stmt_insert->execute([
-                                        'product_ID' => $product_ID,  // ID sản phẩm
-                                        'user_ID' => $user_ID,        // ID người dùng
-                                        'product_code' => $product_code  // Mã sản phẩm ngẫu nhiên
-                                    ]);
-
-                                }
-                            }
-
-                            // Xóa dữ liệu của người dùng trong bảng cart_temp
-                            $stmt_delete = $db->prepare("DELETE FROM cart_temp WHERE user_ID = :user_ID");
-                            $stmt_delete->execute(['user_ID' => $user_ID]);
-
-                            // Cập nhật lại số dư tài khoản
-                            $new_balance = $user_balance - $total_price;
-                            $stmt_update_balance = $db->prepare("UPDATE account_users SET user_balance = :user_balance WHERE user_ID = :user_ID");
-                            $stmt_update_balance->execute(['user_balance' => $new_balance, 'user_ID' => $user_ID]);
-
-                            // Cam kết giao dịch
-                            $db->commit();
-
-                            // Thông báo thành công
-                            echo "<script>alert('Thanh toán thành công!'); window.location.href = 'success.php';</script>";
-                        } catch (Exception $e) {
-                            // Rollback nếu có lỗi
-                            $db->rollBack();
-                            echo "<script>alert('Có lỗi xảy ra trong quá trình thanh toán.');</script>";
-                        }
-                    } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                        echo "<script>alert('Số dư tài khoản không đủ để thanh toán.');</script>";
-                    }
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                      if ($user_balance >= $total_price) {
+                          try {
+                              // Bắt đầu giao dịch
+                              $db->beginTransaction();
+                  
+                              // Lặp qua giỏ hàng và thêm vào purchase_history
+                              $stmt_cart_ID->execute();
+                              while ($rows_cart_ID = $stmt_cart_ID->fetch(PDO::FETCH_ASSOC)) {
+                                  $product_ID = $rows_cart_ID['product_ID'];
+                                  $product_code = $rows_cart_ID['product_code'];
+                  
+                                  if (isset($products[$product_ID])) {
+                                      if (!$purchase_history->add_purchase_history($product_ID, $user_ID, $product_code)) {
+                                          throw new Exception("Không thể thêm sản phẩm {$product_ID} vào lịch sử mua hàng.");
+                                      }
+                                  } else {
+                                      throw new Exception("Sản phẩm không tồn tại: {$product_ID}.");
+                                  }
+                              }
+                  
+                              // Xóa giỏ hàng
+                              $stmt_delete = $db->prepare("DELETE FROM cart_temp WHERE user_ID = :user_ID");
+                              $stmt_delete->execute(['user_ID' => $user_ID]);
+                  
+                              // Cập nhật số dư
+                              $new_balance = $user_balance - $total_price;
+                              $stmt_update_balance = $db->prepare("UPDATE account_users SET user_balance = :user_balance WHERE user_ID = :user_ID");
+                              $stmt_update_balance->execute(['user_balance' => $new_balance, 'user_ID' => $user_ID]);
+                  
+                              // Cam kết giao dịch
+                              $db->commit();
+                  
+                              // Thông báo thành công
+                              echo "<script>alert('Thanh toán thành công!'); window.location.href = 'success.php';</script>";
+                          } catch (Exception $e) {
+                              // Rollback và ghi log lỗi
+                              $db->rollBack();
+                              error_log($e->getMessage());
+                              echo "<script>alert('Có lỗi xảy ra trong quá trình thanh toán. Vui lòng thử lại.');</script>";
+                          }
+                      } else {
+                          echo "<script>alert('Số dư tài khoản không đủ để thanh toán.'); window.location.href = 'cart.php';</script>";
+                      }
+                    } 
+                      
                     ?>
 
                     <div class="col-lg-12">
                         <div class="main-button">
-                            <button type="submit">Thanh toán</button>
+                          <a href="profile.html"><button style="border:none;background-color: #e75e8d;" type="submit">Thanh toán</button></a>
+                            
                         </div>
                     </div>
                 </form>

@@ -54,6 +54,23 @@ class cart{
 			return false;
 		}
 	}
+	public function add_purchase_history($temp_product_ID, $temp_user_ID, $temp_product_code){
+		$sql = "INSERT INTO $this->table (product_ID, user_ID, product_code	) VALUES (:product_ID, :user_ID,:product_code)";
+		$stmt = $this->conn->prepare($sql);
+	
+		// Bind giá trị vào câu lệnh SQL
+		$stmt->bindParam(':product_ID', $temp_product_ID, PDO::PARAM_INT);
+		$stmt->bindParam(':user_ID', $temp_user_ID, PDO::PARAM_INT);
+		$stmt->bindParam(':product_code', $temp_product_code);
+		try {
+			if ($stmt->execute()) {
+				return true;
+			}
+		} catch (PDOException $e) {
+			echo "Error insert record: <br>" . $e->getMessage();
+			return false;
+		}
+	}
 	
 }
 ?>
