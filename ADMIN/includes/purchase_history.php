@@ -44,7 +44,37 @@ class purchase_history{
 		$stmt->execute();
 		return $stmt; 
 	}
+
+	public function update_active($user_ID, $product_ID, $product_code) {
+		try {
+			// Kiểm tra xem bản ghi có tồn tại không
+			$checkSql = "SELECT * FROM $this->table WHERE user_ID = :user_ID AND product_ID = :product_ID AND product_code = :product_code";
+			$checkStmt = $this->conn->prepare($checkSql);
+			$checkStmt->bindParam(':user_ID', $user_ID, PDO::PARAM_INT);
+			$checkStmt->bindParam(':product_ID', $product_ID, PDO::PARAM_INT);
+			$checkStmt->bindParam(':product_code', $product_code);
+			$checkStmt->execute();
 	
+			if ($checkStmt->rowCount() > 0) {
+				// Cập nhật trạng thái active thành 1
+				$updateSql = "UPDATE $this->table SET active = 1 WHERE user_ID = :user_ID AND product_ID = :product_ID AND product_code = :product_code";
+				$updateStmt = $this->conn->prepare($updateSql);
+				$updateStmt->bindParam(':user_ID', $user_ID, PDO::PARAM_INT);
+				$updateStmt->bindParam(':product_ID', $product_ID, PDO::PARAM_INT);
+				$updateStmt->bindParam(':product_code', $product_code);
 	
+				if ($updateStmt->execute()) {
+					return true; // Cập nhật thành công
+				} else {
+					return false; // Lỗi khi cập nhật
+				}
+			} else {
+				return false; // Không tìm thấy bản ghi
+			}
+		} catch (PDOException $e) {
+			echo "Lỗi: " . $e->getMessage();
+			return false;
+		}
+	}
 }
 ?>

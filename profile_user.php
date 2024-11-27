@@ -17,6 +17,14 @@
 
   $purchase_history = new purchase_history($db);
   $purchase_history_user_ID = $purchase_history->user_ID($_SESSION['user_ID']);
+
+  if($_SERVER['REQUEST_METHOD']=='POST'){
+
+    if ($purchase_history->update_active($_REQUEST['check_user_ID'],$_REQUEST['check_product_ID'],$_REQUEST['check_product_code'])) {
+        header("location: profile_user.php");
+    }
+
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +95,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                       <h4><?php echo ($rows_user_ID['user_name']); ?></h4>
                       <p>You Haven't Gone Live yet. Go Live By Touching The Button Below.</p>
                       <div class="main-border-button">
-                        <a href="#">Đăng xuất</a>
+                        <a href="logout.php">Đăng xuất</a>
                       </div>
                     </div>
                   </div>
@@ -153,37 +161,43 @@ https://templatemo.com/tm-579-cyborg-gaming
                             <?php } 
                             // So sánh điều kiện thay vì gán
                             if ($rows_purchase_history_user_ID['active'] == '0') { ?>
-                                <li><div class="main-button"><a href="#">Kích hoạt</a></div></li>
+                                <li><div class="main-button"> <a href="#" data-bs-toggle="modal" data-bs-target="#active<?php echo $rows_purchase_history_user_ID['purchase_history_ID']; ?>">Kích hoạt</a></div></li>
                             <?php } ?>
                         </ul>
                     </div>
+                    <div class="modal fade" id="active<?php echo $rows_purchase_history_user_ID['purchase_history_ID']; ?>" tabindex="-1" aria-labelledby="activationModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                      <form action="" method="POST">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="activationModalLabel" style="color: #ec6090;">Kích hoạt sản phẩm</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          Bạn có chắc chắn muốn kích hoạt sản phẩm này không?
+                          <input type="text" name="check_product_code" class="form-control" id="recipient-name">
+                          <input type="text" name="check_product_ID" class="form-control" id="recipient-name" value="<?php echo $rows_purchase_history_user_ID['product_ID']; ?>">
+                          <input type="text" name="check_user_ID" class="form-control" id="recipient-name" value="<?php echo $rows_purchase_history_user_ID['user_ID']; ?>">
+                        </div>
+                        <div class="modal-footer">
+                          
+                          
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                          <button type="submit" class="btn btn-primary" id="confirmActivationButton">Xác nhận</button>
+                        </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
                     <?php
                 }
                 $num++; // Tăng số thứ tự lên 1
                 }
                 ?>
 
-
-              <!-- <div class="item">
-                <ul>
-                  <li><img src="assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
-                  <li><h4>Fortnite</h4><span>Sandbox</span></li>
-                  <li><h4>Date Added</h4><span>22/06/2036</span></li>
-                  <li><h4>Hours Played</h4><span>745 H 22 Mins</span></li>
-                  <li><h4>Currently</h4><span>Downloaded</span></li>
-                  <li><div class="main-border-button"><a href="product_details.php">Chi tiết</a></div></li>
-                </ul>
-              </div>
-              <div class="item last-item">
-                <ul>
-                  <li><img src="assets/images/game-03.jpg" alt="" class="templatemo-item"></li>
-                  <li><h4>CS-GO</h4><span>Sandbox</span></li>
-                  <li><h4>Date Added</h4><span>21/04/2022</span></li>
-                  <li><h4>Hours Played</h4><span>632 H 46 Mins</span></li>
-                  <li><h4>Currently</h4><span>Downloaded</span></li>
-                  <li><div class="main-button"><a href="#">Kích hoạt</a></div></li>
-                </ul>
-              </div> -->
+            <!-- Modal -->
+                  
+              </div> 
             </div>
           </div>
           <!-- ***** Gaming Library End ***** -->
