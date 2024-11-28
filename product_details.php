@@ -2,6 +2,8 @@
   session_start();
   include ".\ADMIN\includes\connect_database.php";
   include ".\ADMIN\includes\account_user.php";
+  include ".\ADMIN\includes\products.php";
+  include ".\ADMIN\includes\purchase_history.php";
 
   $database = new database();
   $db = $database->connect();
@@ -10,6 +12,15 @@
   $stmt_user_ID = $account_users->read_ID($_SESSION['user_ID']);
   $rows_user_ID = $stmt_user_ID->fetch(PDO::FETCH_ASSOC); 
 
+  $products = new products($db);
+  $stmt_products = $products->read_ID($_GET['details']);
+  $rows_product_ID = $stmt_products->fetch(PDO::FETCH_ASSOC); 
+
+  $purchase_history = new purchase_history($db);
+  $stmt_purchase_history = $purchase_history->count_product($_GET['details']);
+  $row_purchase_history = $stmt_purchase_history->fetch(PDO::FETCH_ASSOC); 
+
+  $products->add_view($_GET['details']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,30 +81,27 @@ https://templatemo.com/tm-579-cyborg-gaming
           <div class="game-details">
             <div class="row">
               <div class="col-lg-12">
-                <h2>Fortnite Details</h2>
+                <h2>Chi tiết sản phẩm</h2>
               </div>
               <div class="col-lg-12">
                 <div class="content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 style="text-align: center; margin-bottom:15px;"><?php echo $rows_product_ID['product_name']; ?></h4>
+                    </div>
+                </div>
+
                   <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
+                      
                       <div class="left-info">
                         <div class="left">
-                          <h4>Fortnite</h4>
-                          <span>Sandbox</span>
+                          <h4>Lượt xem :</h4>
+                          <span>Lượt tải xuống:</span>
                         </div>
                         <ul>
-                          <li><i class="fa fa-star"></i> 4.8</li>
-                          <li><i class="fa fa-download"></i> 2.3M</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="right-info">
-                        <ul>
-                          <li><i class="fa fa-star"></i> 4.8</li>
-                          <li><i class="fa fa-download"></i> 2.3M</li>
-                          <li><i class="fa fa-server"></i> 36GB</li>
-                          <li><i class="fa fa-gamepad"></i> Action</li>
+                          <li><i class="fa fa-eye"></i> <?php echo $rows_product_ID['product_view']; ?></li>
+                          <li><i class="fa fa-download"></i> <?php echo $row_purchase_history['LuotTai']; ?></li>
                         </ul>
                       </div>
                     </div>
@@ -111,7 +119,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                     </div>
                     <div class="col-lg-12">
                       <div class="main-border-button">
-                        <a href="#">Tải xuống</a>
+                        <a href="#">Thêm vào giỏ hàng</a>
                       </div>
                     </div>
                   </div>

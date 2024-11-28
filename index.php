@@ -15,7 +15,7 @@
 
   $cart = new cart($db);
   
-  echo $product_code;
+ 
   if (isset($_SESSION['user_ID'])) {
     // Lấy thông tin người dùng từ session
     $stmt_user_ID = $account_users->read_ID($_SESSION['user_ID']);
@@ -128,7 +128,7 @@ if (isset($_GET['add_cart'])) {
               <div class="col-lg-3 col-sm-6">
                 <div class="item">
                   <div class="thumb">
-                    <img src="./ADMIN/uploads/image/<?php echo $row_products['product_image'] ?>" alt="">
+                    <a href="product_details.php?details=<?php echo $row_products['product_ID'] ?>"><img src="./ADMIN/uploads/image/<?php echo $row_products['product_image'] ?>" alt=""></a>
                     <div class="hover-effect">
                       <div class="content">
                         <div class="live">

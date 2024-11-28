@@ -51,5 +51,25 @@ class products{
 			return false;
 		}
 	}
+	public function read_ID($product_ID) {
+		// Trước khi gán tham số, in ra giá trị
+		$sql = "SELECT * FROM $this->table WHERE product_ID = :get_id";
+	
+		// Chuẩn bị câu lệnh SQL và bind tham số
+		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(":get_id", $product_ID);  // Sử dụng tham số truyền vào phương thức
+	
+		// Thực thi câu lệnh
+		$stmt->execute();
+		
+		return $stmt;  // Trả về đối tượng truy vấn
+	}
+	public function add_view($product_ID){
+		$sql = "UPDATE $this->table SET `product_view` = `product_view` + 1 WHERE product_ID = :get_id";
+		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(":get_id", $product_ID);
+		$stmt->execute();
+		return $stmt;
+	}
 }
 ?>

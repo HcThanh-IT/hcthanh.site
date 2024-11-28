@@ -91,12 +91,9 @@ https://templatemo.com/tm-579-cyborg-gaming
                   </div>
                   <div class="col-lg-4 align-self-center">
                     <div class="main-info header-text">
-                      <span>#<?php echo ($rows_user_ID['user_ID']); ?></span>
+                      <span>Thông tin cá nhân</span>
                       <h4><?php echo ($rows_user_ID['user_name']); ?></h4>
-                      <p>You Haven't Gone Live yet. Go Live By Touching The Button Below.</p>
-                      <div class="main-border-button">
-                        <a href="logout.php">Đăng xuất</a>
-                      </div>
+                      
                     </div>
                   </div>
                   <div class="col-lg-4 align-self-center">
@@ -106,6 +103,14 @@ https://templatemo.com/tm-579-cyborg-gaming
                       <li>Số dư: <span><?php echo ($rows_user_ID['user_balance']); ?>đ</span></li>
                       <li>Ngày tạo: <span><?php echo ($rows_user_ID['user_date_created']); ?></span></li>
                     </ul>
+                  </div>
+                  <div class="col-lg-4 align-self-center">
+                    <div class="main-info header-text">
+                      
+                      <div class="main-border-button">
+                        <a href="logout.php">Đăng xuất</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
@@ -124,8 +129,9 @@ https://templatemo.com/tm-579-cyborg-gaming
                 <ul>
                   <li><h4>STT</h4></li>
                   <li><h4>Hình ảnh</h4></li>
-                  <li><h4>Tên sản phẩm</h4></li>
-                  <li><h4>Mã kích hoạt</h4></li>
+                  <li><h4>Tên sản phẩm</h4> <span>Mã kích hoạt</span></li>
+                  <!-- <li><h4>Tên sản phẩm</h4></li> -->
+                  <!-- <li><h4>Mã kích hoạt</h4></li> -->
                   <li><h4>Thao tác</h4></li>
                 </ul>
               </div>
@@ -151,8 +157,9 @@ https://templatemo.com/tm-579-cyborg-gaming
                         <ul>
                             <li><h4><?php echo $num; ?></h4></li>
                             <li><img src="./ADMIN/uploads/image/<?php echo $product['product_image']; ?>" alt=""></li>
-                            <li><h4><?php echo $product['product_name']; ?></h4></li>
-                            <li><h4><?php echo $rows_purchase_history_user_ID['product_code']; ?></h4></li>
+                            <li><h4><?php echo $product['product_name']; ?></h4> <span><?php echo $rows_purchase_history_user_ID['product_code']; ?></span></li>
+                            <!-- <li><h4><?php echo $product['product_name']; ?></h4></li>
+                            <li><h4><?php echo $rows_purchase_history_user_ID['product_code']; ?></h4></li> -->
 
                             <?php 
                             // So sánh điều kiện thay vì gán

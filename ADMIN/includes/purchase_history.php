@@ -76,5 +76,12 @@ class purchase_history{
 			return false;
 		}
 	}
+	public function count_product($product_ID) {
+		$sql = "SELECT COUNT(product_ID) AS LuotTai FROM $this->table WHERE product_ID = :get_id";
+		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(":get_id", $product_ID);
+		$stmt->execute();
+		return $stmt; 
+	}
 }
 ?>
