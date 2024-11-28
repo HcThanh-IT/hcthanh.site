@@ -39,7 +39,9 @@
   </header>
   <?php 
 
-
+  echo "<pre style='color: white; background-color: black;'>";  // Thiết lập chữ màu trắng, nền đen
+  print_r($_SESSION);  // In ra tất cả dữ liệu trong $_POST
+  echo "</pre>";
 
   if (isset($_GET['error']) && $_GET['error'] == 1) {
     echo "

@@ -1,6 +1,6 @@
 <?php
-    include "includes\connect_database.php";
-    include "includes\products.php";
+    include "./includes/connect_database.php";
+    include "./includes/products.php";
 
     $database = new database;
     $db = $database->connect();

@@ -1,12 +1,16 @@
 <?php 
   session_start();
-  include ".\ADMIN\includes\connect_database.php";
-  include ".\ADMIN\includes\products.php";
-  include ".\ADMIN\includes\account_user.php";
-  include ".\ADMIN\includes\cart.php";
+  include "./ADMIN/includes/connect_database.php";
+  include "./ADMIN/includes/categories.php";
+  include "./ADMIN/includes/products.php";
+  include "./ADMIN/includes/account_user.php";
+  include "./ADMIN/includes/cart.php";
 
   $database = new database;
   $db = $database->connect();
+
+  $categories = new categories($db);
+  $stmt_categories = $categories->read_all();
 
   $products = new products($db);
   $stmt_products = $products->read_all();
@@ -109,11 +113,53 @@ if (isset($_GET['add_cart'])) {
           </div>
           <!-- ***** Banner End ***** -->
 
-          <!-- ***** Most Popular Start ***** -->
-          <div class="most-popular">
-            
+          <!-- ***** Live Stream Start ***** -->
+          <div class="live-stream">
+            <div class="col-lg-12">
+              <div class="heading-section">
+                <h4><em>Danh mục</em> sản phẩm</h4>
+              </div>
+            </div>
+            <div class="row">
+            <?php 
+                while ($row_categories = $stmt_categories->fetch()) {
+            ?>
+              <div class="col-lg-3 col-sm-6">
+                <div class="item">
+                  <div class="thumb">
+                    <a href="categorie_details.php?details=<?php echo $row_categories['categories_ID'] ?>"><img src="./ADMIN/uploads/image/<?php echo $row_categories['categories_image'] ?>" alt=""></a>
+                    <div class="hover-effect">
+                      <div class="content">
+                        <div class="live">
+                        <!-- <a href="#"><i class="fa fa-eye"></i> <?php echo $row_categories['categorie_view'] ?></a> -->
+                        </div>
+                        <ul>
+                          <li><a href="?add_cart=<?php echo $row_categories['categories_ID'] ?>"><i class="fa fa-cart-plus""></i></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="down-content">
+                    <div class="avatar">
+                      <!-- <img src="assets/images/avatar-01.jpg" alt="" style="max-width: 46px; border-radius: 50%; float: left;"> -->
+                    </div>
+                    <span><i class="fa fa-check"></i> HcThanh</span>
+                    <h4><?php echo $row_categories['categories_name'] ?></h4>
+                  </div> 
+                </div>
+              </div>
+            <?php
+            }
+            ?>
+              <div class="col-lg-12">
+                <div class="main-button">
+                  <a href="streams.html">Load More Streams</a>
+                </div>
+              </div>
+            </div>
           </div>
-          <!-- ***** Most Popular End ***** -->
+          <!-- ***** Live Stream End ***** -->
+
             <!-- ***** Live Stream Start ***** -->
           <div class="live-stream">
             <div class="col-lg-12">

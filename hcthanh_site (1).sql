@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2024 at 06:53 AM
+-- Generation Time: Nov 28, 2024 at 02:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -88,6 +88,26 @@ CREATE TABLE `cart_temp` (
   `user_ID` int(10) NOT NULL,
   `product_code` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `categories_ID` int(10) NOT NULL,
+  `categories_name` varchar(50) NOT NULL,
+  `categories_image` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`categories_ID`, `categories_name`, `categories_image`) VALUES
+(1, 'Source code sinh nhật', 'https://imgur.com/LWXZV5t.gif'),
+(2, 'Source code chúc mừng khác', 'web-development-2.gif');
 
 -- --------------------------------------------------------
 
@@ -191,6 +211,12 @@ ALTER TABLE `cart_temp`
   ADD PRIMARY KEY (`cart_temp_ID`);
 
 --
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`categories_ID`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -241,6 +267,12 @@ ALTER TABLE `bank_account`
 --
 ALTER TABLE `cart_temp`
   MODIFY `cart_temp_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `categories_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product`

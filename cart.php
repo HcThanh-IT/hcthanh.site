@@ -1,9 +1,9 @@
 <?php 
   session_start();
-  include ".\ADMIN\includes\connect_database.php";
-  include ".\ADMIN\includes\products.php";
-  include ".\ADMIN\includes\account_user.php";
-  include ".\ADMIN\includes\cart.php";
+  include "./ADMIN/includes/connect_database.php";
+  include "./ADMIN/includes/products.php";
+  include "./ADMIN/includes/account_user.php";
+  include "./ADMIN/includes/cart.php";
   
   $database = new database;
   $db = $database->connect();

@@ -1,16 +1,16 @@
 <?php 
     session_start();
-  include ".\ADMIN\includes\connect_database.php";
-  include ".\ADMIN\includes\account_user.php";
+  include "./ADMIN/includes/connect_database.php";
+  include "./ADMIN/includes/account_user.php";
 
   $database = new database();
   $db = $database->connect();
 
   $account_users = new account_users($db);
   
-  echo "<pre style='color: white; background-color: black;'>";  // Thiết lập chữ màu trắng, nền đen
-  print_r($_POST);  // In ra tất cả dữ liệu trong $_POST
-  echo "</pre>";
+//   echo "<pre style='color: white; background-color: black;'>";  // Thiết lập chữ màu trắng, nền đen
+//   print_r($_POST);  // In ra tất cả dữ liệu trong $_POST
+//   echo "</pre>";
   
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_REQUEST['frm']) && $_REQUEST['frm'] == 'loginAccount') {
@@ -63,7 +63,6 @@
         <!-- Div 1: Form đăng ký -->
         <div class="login-box">
             <h1>WELCOME</h1>
-            <?php echo $_SERVER['REQUEST_METHOD']; ?>
             <form name="frm" method="POST">
                 <div class="user-box">
                     <input type="text" name="user_name" required="">

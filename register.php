@@ -1,6 +1,6 @@
 <?php 
-  include ".\ADMIN\includes\connect_database.php";
-  include ".\ADMIN\includes\account_user.php";
+  include "./ADMIN/includes/connect_database.php";
+  include "./ADMIN/includes/account_user.php";
 
   $database = new database();
   $db = $database->connect();

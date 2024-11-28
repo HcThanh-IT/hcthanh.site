@@ -8,16 +8,32 @@ class database{
 	private $conn;
 
 	//DB connect
-	public function connect(){
+	// public function connect(){
+	// 	$this->conn = null;
+		
+	// 	try{
+	// 		$this->conn = new PDO("mysql:host=$this->servername;dbname=$this->database",$this->username,$this->password);
+	// 		$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	// 	}catch(PDOException $e){
+	// 		echo "Error connection: <br>".$e->getMessage();
+	// 	}
+	// 	return $this->conn;
+	// }
+	public function connect() {
 		$this->conn = null;
 		
-		try{
-			$this->conn = new PDO("mysql:host=$this->servername;dbname=$this->database",$this->username,$this->password);
+		try {
+			// Thêm charset=utf8 vào DSN
+			$this->conn = new PDO("mysql:host=$this->servername;dbname=$this->database;charset=utf8", $this->username, $this->password);
 			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		}catch(PDOException $e){
-			echo "Error connection: <br>".$e->getMessage();
+	
+			// Đặt charset mặc định cho kết nối
+			$this->conn->exec("SET NAMES 'utf8'");
+		} catch (PDOException $e) {
+			echo "Error connection: <br>" . $e->getMessage();
 		}
 		return $this->conn;
 	}
+	
 }
 ?>
