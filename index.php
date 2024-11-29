@@ -76,10 +76,12 @@ if (isset($_GET['add_cart'])) {
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest"></script>
+    
+    <link rel="stylesheet" href="assets/css/music.css">
   </head>
 
 <body>
-
+<?php include './includes/music.php'?>
   <!-- ***** Preloader Start ***** -->
   <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
@@ -126,8 +128,11 @@ if (isset($_GET['add_cart'])) {
             ?>
               <div class="col-lg-3 col-sm-6">
                 <div class="item">
-                  <div class="thumb">
-                    <a href="categorie_details.php?details=<?php echo $row_categories['categories_ID'] ?>"><img src="./ADMIN/uploads/image/<?php echo $row_categories['categories_image'] ?>" alt=""></a>
+                  <div style="border-radius:23px; box-shadow: rgba(240, 46, 170, 0.4) 4px 4px, rgba(240, 46, 170, 0.3) 8px 8px, rgba(240, 46, 170, 0.2) 12px 12px, rgba(240, 46, 170, 0.1) 16px 16px, rgba(240, 46, 170, 0.05) 20px 20px;" class="thumb">
+                    <a href="categorie_details.php?details=<?php echo $row_categories['categories_ID'] ?>"><img style="width: 100%; height: 200px ; object-fit: cover; " 
+     src="./ADMIN/uploads/image/<?php echo $row_categories['categories_image']; ?>" 
+     alt="">
+</a>
                     <div class="hover-effect">
                       <div class="content">
                         <div class="live">
@@ -172,16 +177,19 @@ if (isset($_GET['add_cart'])) {
                 while ($row_products = $stmt_products->fetch()) {
             ?>
               <div class="col-lg-3 col-sm-6">
-                <div class="item">
-                  <div class="thumb">
-                    <a href="product_details.php?details=<?php echo $row_products['product_ID'] ?>"><img src="./ADMIN/uploads/image/<?php echo $row_products['product_image'] ?>" alt=""></a>
+                <div  class="item">
+                <div style="border-radius:23px; box-shadow: rgba(240, 46, 170, 0.4) 3px 3px, rgba(240, 46, 170, 0.3) 6px 6px, rgba(240, 46, 170, 0.2) 9px 9px, rgba(240, 46, 170, 0.1) 12px 12px, rgba(240, 46, 170, 0.05) 15px 15px;" class="thumb">
+                    <a  href="product_details.php?details=<?php echo $row_products['product_ID'] ?>"><img style="width: 100%; height: 150px; object-fit: cover;" src="./ADMIN/uploads/image/<?php echo $row_products['product_image'] ?>" alt="">
+
+
+                    </a>
                     <div class="hover-effect">
                       <div class="content">
                         <div class="live">
                         <a href="#"><i class="fa fa-eye"></i> <?php echo $row_products['product_view'] ?></a>
                         </div>
                         <ul>
-                          <li><a href="?add_cart=<?php echo $row_products['product_ID'] ?>"><i class="fa fa-cart-plus""></i></a></li>
+                          <li><a href="?add_cart=<?php echo $row_products['product_ID'] ?>">Mua <i class="fa fa-cart-plus""></i></a></li>
                         </ul>
                       </div>
                     </div>
@@ -190,8 +198,9 @@ if (isset($_GET['add_cart'])) {
                     <div class="avatar">
                       <!-- <img src="assets/images/avatar-01.jpg" alt="" style="max-width: 46px; border-radius: 50%; float: left;"> -->
                     </div>
-                    <span><i class="fa fa-check"></i> HcThanh</span>
                     <h4><?php echo $row_products['product_name'] ?></h4>
+                    
+                    <span>Giá: <?php echo number_format($row_products['product_price'], 0, ',', '.') ?>đ</span>
                   </div> 
                 </div>
               </div>
