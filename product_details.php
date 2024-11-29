@@ -1,6 +1,7 @@
 <?php 
   session_start();
   include "./ADMIN/includes/connect_database.php";
+  include "./ADMIN/includes/categories.php";
   include "./ADMIN/includes/account_user.php";
   include "./ADMIN/includes/products.php";
   include "./ADMIN/includes/purchase_history.php";
@@ -11,16 +12,25 @@
   $account_users = new account_users($db);
   $stmt_user_ID = $account_users->read_ID($_SESSION['user_ID']);
   $rows_user_ID = $stmt_user_ID->fetch(PDO::FETCH_ASSOC); 
-
+  $categories=new categories($db);
   $products = new products($db);
-  $stmt_products = $products->read_ID($_GET['details']);
-  $rows_product_ID = $stmt_products->fetch(PDO::FETCH_ASSOC); 
+  if(isset($_GET['categories_ID'])){
+    $stmt_products_categories_ID=$products->read_categories_ID($_GET['categories_ID']);
+
+    $stmt_categories = $categories->read_ID($_GET['categories_ID']);
+    $row_stmt_categories =$stmt_categories->fetch(PDO::FETCH_ASSOC); 
+  }
 
   $purchase_history = new purchase_history($db);
-  $stmt_purchase_history = $purchase_history->count_product($_GET['details']);
-  $row_purchase_history = $stmt_purchase_history->fetch(PDO::FETCH_ASSOC); 
-
-  $products->add_view($_GET['details']);
+  if(isset($_GET['details'])){
+    $stmt_products = $products->read_ID($_GET['details']);
+    $rows_product_ID = $stmt_products->fetch(PDO::FETCH_ASSOC); 
+    $stmt_purchase_history = $purchase_history->count_product($_GET['details']);
+    $row_purchase_history = $stmt_purchase_history->fetch(PDO::FETCH_ASSOC); 
+  
+    $products->add_view($_GET['details']);
+  }
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,65 +83,142 @@ https://templatemo.com/tm-579-cyborg-gaming
   
   <!-- ***** Header Area End ***** -->
 
+  <?php 
+    if(isset($_GET['categories_ID'])){ 
+  ?>
   <div class="container">
     <div class="row">
+         
       <div class="col-lg-12">
         <div class="page-content">
-          <!-- ***** Details Start ***** -->
-          <div class="game-details">
-            <div class="row">
-              <div class="col-lg-12">
-                <h2>Chi tiết sản phẩm</h2>
+          <!-- ***** Live Stream Start ***** -->
+          <div class="live-stream">
+            <div class="col-lg-12">
+              <div class="heading-section">
+                <h4><em>Danh mục sản phẩm </em><?php echo $row_stmt_categories['categories_name'] ?> </h4>
               </div>
-              <div class="col-lg-12">
-                <div class="content">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h4 style="text-align: center; margin-bottom:15px;"><?php echo $rows_product_ID['product_name']; ?></h4>
-                    </div>
-                </div>
+            </div>
+              <div class="row">
+              <?php 
+                  while ($row_products_categories_ID = $stmt_products_categories_ID->fetch()) {
+              ?>
+              <div class="col-lg-3 col-sm-6">
+                <div  class="item">
+                <div style="border-radius:23px; box-shadow: rgba(240, 46, 170, 0.4) 3px 3px, rgba(240, 46, 170, 0.3) 6px 6px, rgba(240, 46, 170, 0.2) 9px 9px, rgba(240, 46, 170, 0.1) 12px 12px, rgba(240, 46, 170, 0.05) 15px 15px;" class="thumb">
+                    <a  href="product_details.php?details=<?php echo $row_products_categories_ID['product_ID'] ?>"><img style="width: 100%; height: 150px; object-fit: cover;" src="./ADMIN/uploads/image/<?php echo $row_products_categories_ID['product_image'] ?>" alt="">
 
-                  <div class="row">
-                    <div class="col-lg-12">
-                      
-                      <div class="left-info">
-                        <div class="left">
-                          <h4>Lượt xem :</h4>
-                          <span>Lượt tải xuống:</span>
+
+                    </a>
+                    <div class="hover-effect">
+                      <div class="content">
+                        <div class="live">
+                        <a href="#"><i class="fa fa-eye"></i> <?php echo $row_products_categories_ID['product_view'] ?></a>
                         </div>
                         <ul>
-                          <li><i class="fa fa-eye"></i> <?php echo $rows_product_ID['product_view']; ?></li>
-                          <li><i class="fa fa-download"></i> <?php echo $row_purchase_history['LuotTai']; ?></li>
+                          <li><a href="?add_cart=<?php echo $row_products_categories_ID['product_ID'] ?>">Mua <i class="fa fa-cart-plus""></i></a></li>
                         </ul>
                       </div>
                     </div>
-                    <div class="col-lg-4">
-                      <img src="https://cdn-thumbs.imagevenue.com/76/6b/56/ME19HUHI_t.jpg" alt="" style="border-radius: 23px; margin-bottom: 30px;">
+                  </div>
+                  <div class="down-content">
+                    <div class="avatar">
+                      <!-- <img src="assets/images/avatar-01.jpg" alt="" style="max-width: 46px; border-radius: 50%; float: left;"> -->
                     </div>
-                    <div class="col-lg-4">
-                      <img src="assets/images/details-02.jpg" alt="" style="border-radius: 23px; margin-bottom: 30px;">
+                    <h4><?php echo $row_products_categories_ID['product_name'] ?></h4>
+                    
+                    <span>Giá: <?php echo number_format($row_products_categories_ID['product_price'], 0, ',', '.') ?>đ</span>
+                  </div> 
+                </div>
+              </div>
+              <?php
+              }
+              ?>
+              <div class="col-lg-12">
+                <div class="main-button">
+                  <a href="streams.html">Load More Streams</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ***** Live Stream End ***** -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <?php
+    } else if(isset($_GET['details'])){
+
+  ?>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="page-content">
+              <!-- ***** Details Start ***** -->
+              <div class="game-details">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h2>Chi tiết sản phẩm</h2>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4 style="text-align: center; margin-bottom:15px;"><?php echo $rows_product_ID['product_name']; ?></h4>
+                        </div>
                     </div>
-                    <div class="col-lg-4">
-                      <img src="assets/images/details-03.jpg" alt="" style="border-radius: 23px; margin-bottom: 30px;">
-                    </div>
-                    <div class="col-lg-12">
-                      <p>Cyborg Gaming is free HTML CSS website template provided by TemplateMo. This is Bootstrap v5.2.0 layout. You can make a <a href="https://paypal.me/templatemo" target="_blank">small contribution via PayPal</a> to info [at] templatemo.com and thank you for supporting. If you want to get the PSD source files, please contact us. Lorem ipsum dolor sit consectetur es dispic dipiscingei elit, sed doers eiusmod lisum hored tempor.</p>
-                    </div>
-                    <div class="col-lg-12">
-                      <div class="main-border-button">
-                        <a href="#">Thêm vào giỏ hàng</a>
+
+                      <div class="row">
+                        <div class="col-lg-12">
+                          
+                          <div class="left-info">
+                            <div class="left">
+                              <h4>Lượt xem :</h4>
+                              <span>Lượt tải xuống:</span>
+                            </div>
+                            <ul>
+                              <li><i class="fa fa-eye"></i> <?php echo $rows_product_ID['product_view']; ?></li>
+                              <li><i class="fa fa-download"></i> <?php echo $row_purchase_history['LuotTai']; ?></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <img src="https://cdn-thumbs.imagevenue.com/76/6b/56/ME19HUHI_t.jpg" alt="" style="border-radius: 23px; margin-bottom: 30px;">
+                        </div>
+                        <div class="col-lg-4">
+                          <img src="assets/images/details-02.jpg" alt="" style="border-radius: 23px; margin-bottom: 30px;">
+                        </div>
+                        <div class="col-lg-4">
+                          <img src="assets/images/details-03.jpg" alt="" style="border-radius: 23px; margin-bottom: 30px;">
+                        </div>
+                        <div class="col-lg-12">
+                          <p>Cyborg Gaming is free HTML CSS website template provided by TemplateMo. This is Bootstrap v5.2.0 layout. You can make a <a href="https://paypal.me/templatemo" target="_blank">small contribution via PayPal</a> to info [at] templatemo.com and thank you for supporting. If you want to get the PSD source files, please contact us. Lorem ipsum dolor sit consectetur es dispic dipiscingei elit, sed doers eiusmod lisum hored tempor.</p>
+                        </div>
+                        <div class="col-lg-12">
+                          <div class="main-border-button">
+                            <a href="#">Thêm vào giỏ hàng</a>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <!-- ***** Details End ***** -->
             </div>
           </div>
-          <!-- ***** Details End ***** -->
         </div>
       </div>
-    </div>
-  </div>
+  <?php
+    } else{
+      
+  ?>
+
+<?php
+      
+    }
+  ?>
+
+  
   
   <?php include './includes/footer.php'?>
 

@@ -123,23 +123,23 @@ if (isset($_GET['add_cart'])) {
               </div>
             </div>
             <div class="row">
-            <?php 
-                while ($row_categories = $stmt_categories->fetch()) {
-            ?>
-              <div class="col-lg-3 col-sm-6">
-                <div class="item">
-                  <div style="border-radius:23px; box-shadow: rgba(240, 46, 170, 0.4) 4px 4px, rgba(240, 46, 170, 0.3) 8px 8px, rgba(240, 46, 170, 0.2) 12px 12px, rgba(240, 46, 170, 0.1) 16px 16px, rgba(240, 46, 170, 0.05) 20px 20px;" class="thumb">
-                    <a href="categorie_details.php?details=<?php echo $row_categories['categories_ID'] ?>"><img style="width: 100%; height: 200px ; object-fit: cover; " 
-     src="./ADMIN/uploads/image/<?php echo $row_categories['categories_image']; ?>" 
-     alt="">
-</a>
+              <?php 
+                  while ($row_categories = $stmt_categories->fetch()) {
+              ?>
+                <div class="col-lg-3 col-sm-6">
+                  <div class="item">
+                    <div style="border-radius:23px; box-shadow: rgba(240, 46, 170, 0.4) 4px 4px, rgba(240, 46, 170, 0.3) 8px 8px, rgba(240, 46, 170, 0.2) 12px 12px, rgba(240, 46, 170, 0.1) 16px 16px, rgba(240, 46, 170, 0.05) 20px 20px;" class="thumb">
+                      <a href="./product_details.php?categories_ID=<?php echo $row_categories['categories_ID'] ?>"><img style="width: 100%; height: 200px ; object-fit: cover; " 
+                      src="./ADMIN/uploads/image/<?php echo $row_categories['categories_image']; ?>" 
+                      alt="">
+                  </a>
                     <div class="hover-effect">
                       <div class="content">
                         <div class="live">
                         <!-- <a href="#"><i class="fa fa-eye"></i> <?php echo $row_categories['categorie_view'] ?></a> -->
                         </div>
                         <ul>
-                          <li><a href="?add_cart=<?php echo $row_categories['categories_ID'] ?>"><i class="fa fa-cart-plus""></i></a></li>
+                          <li><a href="./product_details.php?categories_ID=<?php echo $row_categories['categories_ID'] ?>">Xem ngay</a></li>
                         </ul>
                       </div>
                     </div>
@@ -153,14 +153,9 @@ if (isset($_GET['add_cart'])) {
                   </div> 
                 </div>
               </div>
-            <?php
-            }
-            ?>
-              <div class="col-lg-12">
-                <div class="main-button">
-                  <a href="streams.html">Load More Streams</a>
-                </div>
-              </div>
+              <?php
+              }
+              ?>  
             </div>
           </div>
           <!-- ***** Live Stream End ***** -->
@@ -173,9 +168,9 @@ if (isset($_GET['add_cart'])) {
               </div>
             </div>
             <div class="row">
-            <?php 
-                while ($row_products = $stmt_products->fetch()) {
-            ?>
+              <?php 
+                  while ($row_products = $stmt_products->fetch()) {
+              ?>
               <div class="col-lg-3 col-sm-6">
                 <div  class="item">
                 <div style="border-radius:23px; box-shadow: rgba(240, 46, 170, 0.4) 3px 3px, rgba(240, 46, 170, 0.3) 6px 6px, rgba(240, 46, 170, 0.2) 9px 9px, rgba(240, 46, 170, 0.1) 12px 12px, rgba(240, 46, 170, 0.05) 15px 15px;" class="thumb">
@@ -204,9 +199,9 @@ if (isset($_GET['add_cart'])) {
                   </div> 
                 </div>
               </div>
-            <?php
-            }
-            ?>
+              <?php
+              }
+              ?>
               <div class="col-lg-12">
                 <div class="main-button">
                   <a href="streams.html">Load More Streams</a>

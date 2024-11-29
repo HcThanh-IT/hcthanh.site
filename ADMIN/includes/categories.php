@@ -46,17 +46,11 @@ class categories{
 		}
 	}
 	public function read_ID($categories_ID) {
-		// Trước khi gán tham số, in ra giá trị
 		$sql = "SELECT * FROM $this->table WHERE categories_ID = :get_id";
-	
-		// Chuẩn bị câu lệnh SQL và bind tham số
 		$stmt = $this->conn->prepare($sql);
-		$stmt->bindParam(":get_id", $categories_ID);  // Sử dụng tham số truyền vào phương thức
-	
-		// Thực thi câu lệnh
+		$stmt->bindParam(":get_id", $categories_ID);
 		$stmt->execute();
-		
-		return $stmt;  // Trả về đối tượng truy vấn
+		return $stmt;  
 	}
 	public function add_view($categories_ID){
 		$sql = "UPDATE $this->table SET `categories_view` = `categories_view` + 1 WHERE categories_ID = :get_id";
