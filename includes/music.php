@@ -6,7 +6,7 @@
       <span aria-hidden="" class="btn__glitch">_Music🦾</span>
       <label class="number">r1</label>
     </div>
-    <audio id="audio-1" src="./ADMIN/uploads/OK_Lak.mp3" preload="auto"></audio>
+    <audio id="audio-1" src="./ADMIN/uploads/music1.mp3" preload="auto"></audio>
   </div>
   
   <div class="radio-wrapper">
@@ -16,7 +16,7 @@
       <span aria-hidden="" class="btn__glitch">_Z_a_l_o_</span>
       <label class="number">r2</label>
     </div>
-    <audio id="audio-2" src="./ADMIN/uploads/OK_Lak.mp3" preload="auto"></audio>
+    <audio id="audio-2" src="./ADMIN/uploads/music2.mp3" preload="auto"></audio>
   </div>
   
   <div class="radio-wrapper">
@@ -26,7 +26,7 @@
       <span aria-hidden="" class="btn__glitch">Tiktok_</span>
       <label class="number">r3</label>
     </div>
-    <audio id="audio-3" src="./ADMIN/uploads/OK_Lak.mp3" preload="auto"></audio>
+    <audio id="audio-3" src="./ADMIN/uploads/music3.mp3" preload="auto"></audio>
   </div>
 </div>
 

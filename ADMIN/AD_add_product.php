@@ -1,9 +1,13 @@
 <?php
     include "./includes/connect_database.php";
+    include "./includes/categories.php";
     include "./includes/products.php";
 
     $database = new database;
     $db = $database->connect();
+
+    $categories = new categories($db);
+    $stmt_categories = $categories->read_all();
 
     $product = new products($db);
 
@@ -18,9 +22,13 @@
     
         return $randomCode; // Trả về mã sản phẩm ngẫu nhiên
     }
-    
+//         echo "<pre>";
+// print_r($_POST);
+// echo "</pre>";
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Gán các giá trị từ form vào đối tượng $product
+        $product->categories_ID=$_REQUEST['categories_ID'];
         $product->product_name = $_REQUEST['product_name'];
         $product->product_image=$_FILES['product_image']['name'];
         // $product->product_image = $_REQUEST['product_image'];
@@ -33,12 +41,11 @@
             move_uploaded_file($_FILES['product_image']['tmp_name'], $path.$_FILES['product_image']['name']);
         }
         // Gọi hàm generateProductCode để tạo mã sản phẩm ngẫu nhiên
-        $product->product_code = generateProductCode(6);
     
         // Thêm sản phẩm vào cơ sở dữ liệu
         if ($product->add_product()) {
             $status = "Add product successfully!";
-            header('Location: product.php');
+            header('Location: AD_product.php');
             exit(); // Dùng exit() để dừng script sau khi redirect
         }
     }
@@ -159,12 +166,19 @@
                                                     <input type="text" name="product_link" class="form-control" placeholder="Link source code">
                                                 </div>
                                             </div>
-                                            <!-- <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Mã kích hoạt</label>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label" for="val-skill">Danh mục sản phẩm</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" name="product_code" class="form-control" placeholder="Mã kích hoạt">
+                                                    <select class="form-control" name="categories_ID">
+                                                        <option value="">Danh mục sản phẩm</option>
+                                                        <?php
+                                                            while ($row_categories=$stmt_categories->fetch()) {
+                                                                echo"<option value='".$row_categories['categories_ID']."''>".$row_categories['categories_name']."</option>";
+                                                            }
+                                                        ?>
+                                                    </select>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-10">
                                                     <button type="submit" class="btn mb-1 btn-rounded btn-success">Thêm sản phẩm</button>

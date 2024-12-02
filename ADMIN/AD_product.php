@@ -99,7 +99,6 @@
                                                 <th scope="col">Hình ảnh</th>
                                                 <th scope="col">Giá</th>
                                                 <th scope="col">Link</th>
-                                                <th scope="col">Mã kích hoạt</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -110,13 +109,11 @@
                                             <tr>
                                                 <td style="width:50px"> <?php echo $row_product['product_name'] ?></td>
                                                 <td style="width:20%">
-                                                   <img style="width:70%; height:7vw; object-fit: cover;" 
+                                                   <img style="border:1px solid #000; height:7vw; object-fit: cover;" 
                                                    src="./uploads/image/<?php echo $row_product['product_image'] ?>" alt="">
                                                 </td>
                                                 <td style="width:15%"><span class="label gradient-1 btn-rounded"><?php echo $row_product['product_price'] ?> đ</span></td>
                                                 <td style="width:40%"><?php echo $row_product['product_link'] ?></span>
-                                                </td>
-                                                <td style="width:10%"><span class="label gradient-1 btn-rounded"><?php echo $row_product['product_code'] ?></span>
                                                 </td>
                                                 <td style="width:5%">
                                                     <span>

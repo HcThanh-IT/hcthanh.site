@@ -69,10 +69,10 @@
                     <label>Email</label>
                 </div>
                 <div class="user-box">
-                    <input type="text" name="user_security-code" required="">
+                    <input type="text" name="user_security_code" required="">
                     <label>Mã bảo mật (Viết liền không dấu)</label>
                 </div>
-                <p class="p_security-code">* Dùng khi cấp lại mật khẩu</p>
+                <p class="p_security_code">* Dùng khi cấp lại mật khẩu</p>
                 <center>
                     <input type="hidden" name="frm" value="createAccount">
                     <button class="btn_a" type="submit">Đăng ký</button>

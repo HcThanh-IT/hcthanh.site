@@ -13,9 +13,7 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a href="./index.php" class="active">Trang chủ</a></li>
-                        <li><a href="./browse.html">Browse</a></li>
                         <li><a href="./deposit_money.php">Nạp tiền</a></li>
-                        <li><a href="./streams.html">Streams</a></li>
                         <li><a href="./cart.php">Giỏ hàng</a></li>
                         <?php 
                         if (isset($_SESSION['user_ID'])) {
@@ -40,9 +38,9 @@
   </header>
   <?php 
 
-  echo "<pre style='color: white; background-color: black;'>";  // Thiết lập chữ màu trắng, nền đen
-  print_r($_SESSION);  // In ra tất cả dữ liệu trong $_POST
-  echo "</pre>";
+//   echo "<pre style='color: white; background-color: black;'>";  // Thiết lập chữ màu trắng, nền đen
+//   print_r($_SESSION);  // In ra tất cả dữ liệu trong $_POST
+//   echo "</pre>";
 
   if (isset($_GET['error']) && $_GET['error'] == 1) {
     echo "
