@@ -13,7 +13,7 @@
   $stmt_categories = $categories->read_all();
 
   $products = new products($db);
-  $stmt_products = $products->read_all();
+  $stmt_products = $products->read_product_view();
   
   $account_users = new account_users($db);
 
@@ -204,7 +204,7 @@ if (isset($_GET['add_cart'])) {
               ?>
               <div class="col-lg-12">
                 <div class="main-button">
-                  <a href="streams.html">Load More Streams</a>
+                  <a href="./product_details.php">Xem tất cả</a>
                 </div>
               </div>
             </div>

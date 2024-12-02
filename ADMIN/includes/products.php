@@ -83,5 +83,11 @@ class products{
 		$stmt->execute();
 		return $stmt;
 	}
+	public function read_product_view() {
+		$sql = "SELECT * FROM $this->table ORDER BY product_view DESC LIMIT 4";
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
 }
 ?>

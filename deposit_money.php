@@ -7,9 +7,10 @@
   $db = $database->connect();
 
   $account_users = new account_users($db);
+  if (isset($_SESSION["user_ID"])) {
   $stmt_user_ID = $account_users->read_ID($_SESSION['user_ID']);
   $rows_user_ID = $stmt_user_ID->fetch(PDO::FETCH_ASSOC); 
-
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +67,7 @@ https://templatemo.com/tm-579-cyborg-gaming
     <div class="row">
       <div class="col-lg-12">
         <div class="page-content">
-
+          <?php if (isset($_SESSION["user_ID"])) { ?>
           <!-- ***** Details Start ***** -->
           <div class="game-details">
             <div class="row">
@@ -94,8 +95,15 @@ https://templatemo.com/tm-579-cyborg-gaming
             </div>
           </div>
           <!-- ***** Details End ***** -->
-
-
+          <?php } 
+          else {
+          ?>
+          <div class="col-lg-12">
+            <div class="heading-section">
+                <h4>Vui lòng <em><a href="./login.php">đăng nhập</a></em> để xem nạp tiền</h4>
+            </div>
+          </div>
+          <?php } ?>
         </div>
       </div>
     </div>

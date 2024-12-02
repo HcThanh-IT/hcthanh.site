@@ -1,5 +1,5 @@
 /* From Uiverse.io by rubyreapergaming */ 
-.container_music {
+.custom_container_music {
     display: flex;
     flex-direction: row;
     position: fixed; 
@@ -8,14 +8,14 @@
     z-index: 999;    /* Ensure it's above other elements */
   }
   
-  .radio-wrapper {
+  .custom_radio_wrapper {
     position: relative;
     height: 38px;
     width: 84px;
     margin: 3px;
   }
   
-  .radio-wrapper .input {
+  .custom_radio_wrapper .custom_input {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -25,7 +25,7 @@
     opacity: 0;
   }
   
-  .btn {
+  .custom_btn {
     --primary: #E75E8D;
     --shadow-primary: #2fddea;
     --color: #ffffff;
@@ -137,18 +137,18 @@
     font-family: "Orbitron", sans-serif; /* Orbitron font */
   }
   
-  .input:checked + .btn {
+  .custom_input:checked + .custom_btn {
     --primary: #161a25;
     --shadow-primary: #ffffff;
   }
   
-  .input:hover + .btn {
+  .custom_input:hover + .custom_btn {
     --primary: #cc133c;
     --font-size: 11px;
   }
   
-  .btn:after,
-  .btn:before {
+  .custom_btn:after,
+  .custom_btn:before {
     content: "";
     position: absolute;
     top: 0;
@@ -159,28 +159,18 @@
     z-index: -1;
   }
   
-  .btn:before {
+  .custom_btn:before {
     background: var(--shadow-primary);
     transform: translate(var(--border), 0);
   }
   
-  .btn:after {
+  .custom_btn:after {
     background: var(--primary);
   }
   
-  .btn__tag {
-    position: absolute;
-    padding: 1px 4px;
-    letter-spacing: 1px;
-    line-height: 1;
-    bottom: -5%;
-    right: 5%;
-    font-weight: normal;
-    color: hsl(0, 0%, 0%);
-    font-size: var(--label-size);
-  }
+
   
-  .btn__glitch {
+  .custom_btn__glitch {
     position: absolute;
     top: calc(var(--border) * -1);
     left: calc(var(--border) * -1);
@@ -193,16 +183,16 @@
     display: none;
   }
   
-  .input:hover + .btn .btn__glitch {
+  .custom_input:hover + .custom_btn .custom_btn__glitch {
     display: block;
   }
   
-  .input:checked + .btn .btn__glitch {
+  .custom_input:checked + .custom_btn .custom_btn__glitch {
     display: block;
     animation: glitch 5s infinite;
   }
   
-  .btn__glitch:before {
+  .custom_btn__glitch:before {
     content: "";
     position: absolute;
     top: calc(var(--border) * 1);

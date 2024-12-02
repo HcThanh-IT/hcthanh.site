@@ -1,29 +1,29 @@
-<div class="container_music">
-  <div class="radio-wrapper">
-    <input type="radio" id="value-1" name="btn" class="input" />
-    <div class="btn">
+<div class="custom_container_music">
+  <div class="custom_radio_wrapper">
+    <input type="checkbox" id="value-1" name="btn" class="custom_input" />
+    <div class="custom_btn">
       <span aria-hidden="">_</span>Music
-      <span aria-hidden="" class="btn__glitch">_Music🦾</span>
+      <span aria-hidden="" class="custom_btn__glitch">_Music🦾</span>
       <label class="number">r1</label>
     </div>
     <audio id="audio-1" src="./ADMIN/uploads/music1.mp3" preload="auto"></audio>
   </div>
   
-  <div class="radio-wrapper">
-    <input type="radio" id="value-2" name="btn" class="input" />
-    <div class="btn">
+  <div class="custom_radio_wrapper">
+    <input type="checkbox" id="value-2" name="btn" class="custom_input" />
+    <div class="custom_btn">
       _Zalo<span aria-hidden="">_</span>
-      <span aria-hidden="" class="btn__glitch">_Z_a_l_o_</span>
+      <span aria-hidden="" class="custom_btn__glitch">_Z_a_l_o_</span>
       <label class="number">r2</label>
     </div>
     <audio id="audio-2" src="./ADMIN/uploads/music2.mp3" preload="auto"></audio>
   </div>
   
-  <div class="radio-wrapper">
-    <input type="radio" id="value-3" name="btn" class="input" />
-    <div class="btn">
+  <div class="custom_radio_wrapper">
+    <input type="checkbox" id="value-3" name="btn" class="custom_input" />
+    <div class="custom_btn">
       Tiktok<span aria-hidden=""></span>
-      <span aria-hidden="" class="btn__glitch">Tiktok_</span>
+      <span aria-hidden="" class="custom_btn__glitch">Tiktok_</span>
       <label class="number">r3</label>
     </div>
     <audio id="audio-3" src="./ADMIN/uploads/music3.mp3" preload="auto"></audio>

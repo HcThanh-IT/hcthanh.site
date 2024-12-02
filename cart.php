@@ -1,26 +1,26 @@
-<?php 
-  session_start();
-  include "./ADMIN/includes/connect_database.php";
-  include "./ADMIN/includes/products.php";
-  include "./ADMIN/includes/account_user.php";
-  include "./ADMIN/includes/cart.php";
-  
-  $database = new database;
-  $db = $database->connect();
+<?php
+session_start();
+include "./ADMIN/includes/connect_database.php";
+include "./ADMIN/includes/products.php";
+include "./ADMIN/includes/account_user.php";
+include "./ADMIN/includes/cart.php";
 
-  $products = new products($db);
-  $stmt_products = $products->read_all();
-  
-  $account_users = new account_users($db);
+$database = new database();
+$db = $database->connect();
 
-  $cart = new cart($db);
+$products = new products($db);
+$stmt_products = $products->read_all();
 
-  if (isset($_SESSION['user_ID'])) {
-  $stmt_user_ID = $account_users->read_ID($_SESSION['user_ID']);
-  $rows_user_ID = $stmt_user_ID->fetch(PDO::FETCH_ASSOC);
+$account_users = new account_users($db);
 
-  $stmt_cart_ID = $cart->cart_ID($_SESSION['user_ID']);
-  }
+$cart = new cart($db);
+
+if (isset($_SESSION["user_ID"])) {
+    $stmt_user_ID = $account_users->read_ID($_SESSION["user_ID"]);
+    $rows_user_ID = $stmt_user_ID->fetch(PDO::FETCH_ASSOC);
+
+    $stmt_cart_ID = $cart->cart_ID($_SESSION["user_ID"]);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,88 +66,105 @@
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
-  <?php include './includes/header.php'?>
+  <?php include "./includes/header.php"; ?>
   <!-- ***** Header Area End ***** -->
 
   <div class="container">
     <div class="row">
+     
       <div class="col-lg-12">
         <div class="page-content">
-
-          <!-- ***** Gaming Library Start ***** -->
-          <div class="gaming-library">
+            <?php if (isset($_SESSION["user_ID"])) { ?>
+          
+            <!-- ***** Gaming Library Start ***** -->
             <form action="">
-              <?php 
-                if (isset($_SESSION['user_ID'])) {
-                  ?>
-            <div class="col-lg-12">
-    <div class="heading-section">
-        <h4><em>Giỏ hàng</em></h4>
-    </div>
-
-    <?php
-    // Biến để lưu tổng giá trị giỏ hàng
-    $total_price = 0;
-
-    // Lấy tất cả sản phẩm trước để không phải gọi fetch() trong vòng lặp lồng nhau
-    $products = [];
-    while ($row_products = $stmt_products->fetch()) {
-        $products[$row_products['product_ID']] = $row_products; // Lưu trữ các sản phẩm trong mảng theo ID sản phẩm
-    }
-
-    // Lặp qua giỏ hàng và tính tổng giá
-    while ($rows_cart_ID = $stmt_cart_ID->fetch()) {
-        $product_ID = $rows_cart_ID['product_ID'];
-
-        // Kiểm tra xem sản phẩm có tồn tại trong mảng $products không
-        if (isset($products[$product_ID])) {
-            $product = $products[$product_ID];
-
-            // Cộng giá trị sản phẩm vào tổng
-            $total_price += $product['product_price'];  // Giả sử giá sản phẩm là số, nếu có đơn vị tiền tệ, bạn có thể xử lý thêm
-
-            ?>
-            <div class="item">
-                <ul>
-                    <li><img src="./ADMIN/uploads/image/<?php echo $product['product_image']; ?>" alt=""></li>
-                    <li><h4><?php echo $product['product_name']; ?></h4></li>
-                    <li><h4><?php echo number_format($product['product_price'], 0, ',', '.'); ?> đ</h4></li> <!-- Hiển thị giá sản phẩm -->
-                    <li><h4>Hours Played</h4></li>
-                    <li><h4>Currently</h4></li>
-                </ul>
-            </div>
-            <?php
-        }
-    }
-    ?>
-
-    <!-- Hiển thị tổng giá tiền -->
-    <div class="total-price">
-        <h4>Tổng tiền : <strong><?php echo number_format($total_price, 0, ',', '.'); ?> đ</strong></h4>
-    </div>
-</div>
-
-              <div class="col-lg-12">
-                <div class="main-button">
-                  <a href="">Thanh toán</a>
+              <div class="gaming-library">
+              
+                <div class="col-lg-12">
+                <div class="heading-section">
+                    <h4><em>Giỏ hàng</em></h4>
                 </div>
+
+                        <?php
+                        // Biến để lưu tổng giá trị giỏ hàng
+                        $total_price = 0;
+
+                        // Lấy tất cả sản phẩm trước để không phải gọi fetch() trong vòng lặp lồng nhau
+                        $products = [];
+                        while ($row_products = $stmt_products->fetch()) {
+                            $products[$row_products["product_ID"]] = $row_products; // Lưu trữ các sản phẩm trong mảng theo ID sản phẩm
+                        }
+
+                        // Lặp qua giỏ hàng và tính tổng giá
+                        while ($rows_cart_ID = $stmt_cart_ID->fetch()) {
+                            $product_ID = $rows_cart_ID["product_ID"];
+
+                            // Kiểm tra xem sản phẩm có tồn tại trong mảng $products không
+                            if (isset($products[$product_ID])) {
+
+                                $product = $products[$product_ID];
+
+                                // Cộng giá trị sản phẩm vào tổng
+                                $total_price += $product["product_price"];
+
+                                // Giả sử giá sản phẩm là số, nếu có đơn vị tiền tệ, bạn có thể xử lý thêm
+                                ?>
+                                <div class="item">
+                                    <ul>
+                                        <li><img src="./ADMIN/uploads/image/<?php echo $product[
+                                            "product_image"
+                                        ]; ?>" alt=""></li>
+                                        <li><h4><?php echo $product["product_name"]; ?></h4></li>
+                                        <li><h4><?php echo number_format(
+                                            $product["product_price"],
+                                            0,
+                                            ",",
+                                            "."
+                                        ); ?> đ</h4></li> <!-- Hiển thị giá sản phẩm -->
+                                        <li><h4>Hours Played</h4></li>
+                                        <li><h4>Currently</h4></li>
+                                    </ul>
+                                </div>
+                                <?php
+                            }
+                        }
+                        ?>
+
+                        <!-- Hiển thị tổng giá tiền -->
+                        <div class="total-price">
+                            <h4>Tổng tiền : <strong><?php echo number_format(
+                                $total_price,
+                                0,
+                                ",",
+                                "."
+                            ); ?> đ</strong></h4>
+                        </div>
+                        </div>
+
+                                  <div class="col-lg-12">
+                                    <div class="main-button">
+                                      <a href="">Thanh toán</a>
+                                    </div>
+                </div>
+            
               </div>
             </form>
-          </div>
-          <!-- ***** Gaming Library End ***** -->
+            <!-- ***** Gaming Library End ***** -->
+            <?php } 
+            else {
+            ?>
+            <div class="col-lg-12">
+              <div class="heading-section">
+                  <h4>Vui lòng <em><a href="./login.php">đăng nhập</a></em> để xem giỏ hàng</h4>
+              </div>
+            </div>
+            <?php } ?>
         </div>
       </div>
     </div>
   </div>
-  <?php } else{
-  ?>
-  <div class="col-lg-12">
-    <div class="heading-section">
-        <h4>Vui lòng <em><a href="./login.php">đăng nhập</a></em> để xem giỏ hàng</h4>
-    </div>
-  </div>
-  <?php }?>
-  <?php include './includes/footer.php'?>
+
+  <?php include "./includes/footer.php"; ?>
 
 
   <!-- Scripts -->
